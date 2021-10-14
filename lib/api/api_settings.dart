@@ -1,0 +1,16 @@
+class ApiSettings{
+
+  static const BASE_URL_API = "https://api.saman.parts/api/";
+  static const BASE_URL = "https://saman.parts/";
+  static const REGISTER_USER =  BASE_URL_API + "register";
+  static const LOGIN_USER =  BASE_URL_API + "login";
+  static const BRANDS =  BASE_URL_API + "getCategory";
+  static const CARS =  BASE_URL_API + "cars";
+  static const BLOG =  BASE_URL_API + "blog";
+  static const USERDETAILS =  BASE_URL_API + "details";
+  static const CHANGEPASSWORD =  BASE_URL_API + "changePassword";
+  static const OTPVERIFY =  BASE_URL_API + "otp_verify";
+  static const LOGOUT =  BASE_URL_API + "logout";
+  static const PROFILEIMAGE =  BASE_URL_API + "updateProfileImage";
+
+}
