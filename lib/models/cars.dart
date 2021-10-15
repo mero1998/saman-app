@@ -17,8 +17,8 @@ class Cars {
  late String updatedAt;
  late String color;
  late String? mileage;
- late String? engine;
- late Null fuelConsumption;
+  String? engine;
+  String? fuelConsumption;
  late String fuelType;
  late String? fuelEconomy;
  late String? interColor;

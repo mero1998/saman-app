@@ -297,12 +297,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: carsController.getListLength(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
-                      carsController.showList();
+                      // carsController.showList();
                       return Container(
                           margin:
                               EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
                           child: ProductWidget(
-                            cars: carsController.showCars[index],
+                            cars:  carsController.showCars[index],
                           ));
                     }));
           }),

@@ -11,7 +11,7 @@ class CarsGetxController extends GetxController{
   RxList<Cars> showCars = <Cars>[].obs;
 
 
-  RxBool selectNew = true.obs;
+  RxBool  selectNew = false.obs;
   RxBool selectOld = false.obs;
   RxBool selectFilter = false.obs;
   
@@ -20,18 +20,18 @@ class CarsGetxController extends GetxController{
 
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    indexCars();
+    await indexCars();
     getCars();
-    // indexOldCars();
-    // indexNewCars();
+    showList();
   }
 
 
 
   Future<void> indexCars() async{
     cars.value = await carsControllerApi.indexCars();
+    print("From Index :${cars.value}");
   }
 
   void getCars(){
@@ -41,6 +41,8 @@ class CarsGetxController extends GetxController{
      oldCars.value = cars.where((e) => e.isOld == "1").toList();
     }else if(selectFilter.value){
      carsFilter.value =  cars.where((e) => e.color == "black").toList();
+    }else{
+       showCars.value = cars;
     }
   }
 
@@ -52,20 +54,20 @@ class CarsGetxController extends GetxController{
   }else if(selectFilter.value){
   return carsFilter.length;
   }else{
-  return newCars.length;
+  return cars.length;
   }
   }
-  Future<void> indexOldCars() async{
-    // cars.value.where((e) => e.isOld != isOld);\
-    cars.value = await carsControllerApi.indexOldCars();
-
-    print("Old CARS Length: ${cars.length}");
-  }
-  Future<void> indexNewCars() async{
-    cars.value = await carsControllerApi.indexNewCars();
-    print("New CARS Length: ${cars.length}");
-
-  }
+  // Future<void> indexOldCars() async{
+  //   // cars.value.where((e) => e.isOld != isOld);\
+  //   cars.value = await carsControllerApi.indexOldCars();
+  //
+  //   print("Old CARS Length: ${cars.length}");
+  // }
+  // Future<void> indexNewCars() async{
+  //   cars.value = await carsControllerApi.indexNewCars();
+  //   print("New CARS Length: ${cars.length}");
+  //
+  // }
 
   Future<void> indexFilterCars({required String isOld, required String model, required String price_from ,required String price_to,required String brand_id , required String color}) async{
     carsFilter.value = await carsControllerApi.indexCarsFilter(
@@ -98,13 +100,18 @@ class CarsGetxController extends GetxController{
 
   List<Cars> showList(){
     if(selectNew.value){
+      print("new selected");
         return showCars = newCars;
     }else if(selectOld.value){
+      print("Old selected");
       return showCars = oldCars;
     }else if(selectFilter.value){
+      print("Filter selected");
       return showCars = carsFilter;
     }else{
-      return showCars;
+      print("ShowCars selected");
+      print(cars.length);
+      return showCars.value = cars;
     }
 
   }

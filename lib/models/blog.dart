@@ -57,19 +57,18 @@ class Blog {
  late int id;
  late String title;
  late String description;
- late String image;
+  String? image;
  late String createdAt;
  late String updatedAt;
  late String status;
  late String imageUrl;
 
 
-
   Blog.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];
-    image = json['image'];
+    image != null ? image = json['image'] : image = "";
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];

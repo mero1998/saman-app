@@ -17,6 +17,8 @@ class BlogControllerGetx extends GetxController{
 
   Future<void> indexBlog() async{
     blogs.value = await blogControllerApi.indexBlog();
+
+
   }
 
 
