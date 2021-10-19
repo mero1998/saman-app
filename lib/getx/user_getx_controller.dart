@@ -23,7 +23,6 @@ class UserGetxController extends GetxController{
   Future<void> indexUserDetails() async{
 
     UserDetails? userDetails  = await userApiController.userDetails();
-    print("User name : ${userDetails!.name}");
     user.add(userDetails);
     // user[0] = await userApiController.userDetails();
     print("We are here User GETX");

@@ -55,8 +55,8 @@ class HowToSafeCard extends StatelessWidget {
                       ),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-
-                        image: NetworkImage(ApiSettings.BASE_URL+  blog.image!),
+                        image: NetworkImage(blog.imageUrl),
+                        // image: NetworkImage(blog.image != null ? ApiSettings.BASE_URL+  blog.image : "https://www.freecodecamp.org/news/content/images/2021/08/Flutter-logo.png"),
                       ),
                     ),
                   ),

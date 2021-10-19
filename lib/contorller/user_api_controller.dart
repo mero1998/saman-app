@@ -164,6 +164,7 @@ class UserApiController with Helper{
     var url  = Uri.parse(ApiSettings.LOGOUT);
     var response = await http.get(url , headers: {
       HttpHeaders.authorizationHeader : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+      "Accept" : "application/json"
     });
     if(response.statusCode == 200){
       UserPreferences().logout();

@@ -270,7 +270,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
           ),
           SizedBox(height: SizeConfig.scaleHeight(27),),
 
-          ButtonApp(text: "التالي" ?? "", width: double.infinity, height: 59, onPressed: () {} /*{ performVerify() },*/ ),
+          ButtonApp(text: "التالي", width: double.infinity, height: 59, onPressed: () {} /*{ performVerify() },*/ ),
           SizedBox(height: SizeConfig.scaleHeight(21),),
 
         ],

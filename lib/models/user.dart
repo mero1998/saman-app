@@ -54,7 +54,8 @@ class User {
 
 class Data {
  late int id;
- late String name;
+ late String first_name;
+ late String last_name;
  late String email;
  late Null emailVerifiedAt;
  late String createdAt;
@@ -72,7 +73,8 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    first_name = json['first_name'];
+    last_name = json['last_name'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
     createdAt = json['created_at'];
@@ -90,7 +92,8 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
+    data['first_name'] = this.first_name;
+    data['last_name'] = this.last_name;
     data['email'] = this.email;
     data['email_verified_at'] = this.emailVerifiedAt;
     data['created_at'] = this.createdAt;

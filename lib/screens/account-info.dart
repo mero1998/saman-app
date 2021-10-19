@@ -13,8 +13,8 @@ class AccountInfo extends StatefulWidget {
 }
 
 class _AccountInfoState extends State<AccountInfo> {
-  TextEditingController _firstNameTextEditingController  = TextEditingController(text: UserGetxController.to.user.value.first!.name);
-  TextEditingController _lastNameTextEditingController = TextEditingController(text: UserGetxController.to.user.value.first!.name);
+  TextEditingController _firstNameTextEditingController  = TextEditingController(text: UserGetxController.to.user.first!.first_name);
+  TextEditingController _lastNameTextEditingController = TextEditingController(text: UserGetxController.to.user.value.first!.last_name);
   TextEditingController _mobileTextEditingController = TextEditingController(text: UserGetxController.to.user.value.first!.mobile);
   // TextEditingController country = TextEditingController(text: UserGetxController.to.user.value.first!.co);
   TextEditingController _emailTextEditingController  = TextEditingController(text: UserGetxController.to.user.value.first!.email);
@@ -135,6 +135,7 @@ class _AccountInfoState extends State<AccountInfo> {
                         onInputChanged: (PhoneNumber number) {
                           print(number.phoneNumber);
                           print(number.dialCode);
+                          print(number.isoCode);
                           setState(() {
                             countryCode = number.dialCode;
                           });

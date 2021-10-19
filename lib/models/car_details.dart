@@ -25,7 +25,7 @@ class CarDetails {
  late Null power;
  late String drive;
  late String exteriorId;
- late String interiorImage;
+ late String? interiorImage;
  late bool wishlist;
  late bool inCart;
  late String imageUrl;

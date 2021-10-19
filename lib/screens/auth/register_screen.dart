@@ -142,7 +142,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextFiledApp(hint: "تأكيد كلمة المرور", prefixIcon: Icons.lock_open_outlined,controller: _confPasswordTextEditingController, obscure: true,),
       SizedBox(height: SizeConfig.scaleHeight(21),),
 
-
       SizedBox(height: SizeConfig.scaleHeight(27)),
       ButtonApp(text: "تسجيل", width: double.infinity, height: 59, onPressed: () => PerformRegister(),),
       SizedBox(height: SizeConfig.scaleHeight(22)),

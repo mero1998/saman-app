@@ -57,7 +57,7 @@ class Blog {
  late int id;
  late String title;
  late String description;
-  String? image;
+ late String image;
  late String createdAt;
  late String updatedAt;
  late String status;
@@ -68,7 +68,7 @@ class Blog {
     id = json['id'];
     title = json['title'];
     description = json['description'];
-    image != null ? image = json['image'] : image = "";
+    image = json['image'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];

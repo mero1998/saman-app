@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:saman_project/contorller/user_api_controller.dart';
 import 'package:saman_project/utils/size-config.dart';
 import 'package:saman_project/utils/size-config.dart';
 
@@ -72,7 +73,7 @@ class MyDrawer extends StatelessWidget {
                    MenuListItems(
                      title: 'تسجيل خروج',
                      onTap: (){
-
+                      UserApiController().logout(context);
                      },
                    ),
 
