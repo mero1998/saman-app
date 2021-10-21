@@ -12,5 +12,6 @@ class ApiSettings{
   static const OTPVERIFY =  BASE_URL_API + "otp_verify";
   static const LOGOUT =  BASE_URL_API + "logout";
   static const PROFILEIMAGE =  BASE_URL_API + "updateProfileImage";
+  static const ADDTOWISHLIST =  BASE_URL_API + "addToWishlist";
 
 }

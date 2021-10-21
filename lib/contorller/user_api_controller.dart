@@ -25,7 +25,8 @@ import 'package:saman_project/utils/helpers.dart';
 class UserApiController with Helper{
   Future<bool> register({
     required String email,
-    required String name,
+    required String firstName,
+    required String lastName,
     required String password,
     required String mobile,
     required String contryCode,
@@ -33,11 +34,11 @@ class UserApiController with Helper{
     var url = Uri.parse(ApiSettings.REGISTER_USER);
 
     var response = await http.post(url, body: {
-      "name" : name,
+      "first_name" : firstName,
+      "last_name" : lastName,
       "email": email,
       "contryCode" : contryCode,
       "mobile": mobile,
-      "password": password,
       "password": password,
       "c_password": password,
       // "image": image,

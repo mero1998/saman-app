@@ -20,7 +20,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  late TextEditingController _nameTextEditingController;
+  late TextEditingController _firstNameTextEditingController;
+  late TextEditingController _lastNameTextEditingController;
   late TextEditingController _mobileTextEditingController;
   late TextEditingController _passwordTextEditingController;
   late TextEditingController _confPasswordTextEditingController;
@@ -40,7 +41,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _nameTextEditingController = TextEditingController();
+    _firstNameTextEditingController = TextEditingController();
+    _lastNameTextEditingController = TextEditingController();
     _mobileTextEditingController = TextEditingController();
     _passwordTextEditingController = TextEditingController();
     _emailEditingController = TextEditingController();
@@ -54,7 +56,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _nameTextEditingController.dispose();
+    _firstNameTextEditingController.dispose();
+    _lastNameTextEditingController.dispose();
     _mobileTextEditingController.dispose();
     _passwordTextEditingController.dispose();
     _emailEditingController.dispose();
@@ -76,6 +79,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ),
     ),
     body: ListView(
+      physics: ScrollPhysics(),
+    shrinkWrap: true,
     padding: EdgeInsetsDirectional.only(
     start: SizeConfig.scaleWidth(28),
     end: SizeConfig.scaleWidth(28),
@@ -83,10 +88,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     children: [
     TextApp(text: "انشاء حساب جديد", fontSize: 30, fontColor: Colors.black, fontWeight: FontWeight.w500,),
     SizedBox(height: SizeConfig.scaleHeight(17),),
-    SizedBox(height: SizeConfig.scaleHeight(94),),
+    // SizedBox(height: SizeConfig.scaleHeight(94),),
 
-    TextFiledApp(hint:  "الاسم", prefixIcon: Icons.person_outline, controller: _nameTextEditingController),
-    TextFiledApp(hint:  "البريد الالكتروني", prefixIcon: Icons.person_outline, controller: _emailEditingController),
+      TextFiledApp(hint:  "الاسم الأول", prefixIcon: Icons.person_outline, controller: _firstNameTextEditingController),
+      TextFiledApp(hint:  "الاسم الأخير", prefixIcon: Icons.person_outline, controller: _lastNameTextEditingController),
+    TextFiledApp(hint:  "البريد الالكتروني", prefixIcon: Icons.email, controller: _emailEditingController),
 
       SizedBox(height: SizeConfig.scaleHeight(21),),
       InternationalPhoneNumberInput(
@@ -183,7 +189,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool checkData(){
     if(_mobileTextEditingController.text.isNotEmpty &&
-        _nameTextEditingController.text.isNotEmpty &&
+        _firstNameTextEditingController.text.isNotEmpty &&
+        _lastNameTextEditingController.text.isNotEmpty &&
         _passwordTextEditingController.text.isNotEmpty &&
         _emailEditingController.text.isNotEmpty &&
         _confPasswordTextEditingController.text.isNotEmpty &&
@@ -204,13 +211,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     print(_mobileTextEditingController.text);
     print(countryCode);
+    print(_emailEditingController.text);
+    print(_firstNameTextEditingController.text);
+    print(_lastNameTextEditingController.text);
+    print(_passwordTextEditingController.text);
+    print(_confPasswordTextEditingController.text);
  bool success =  await UserApiController().register(
 
         mobile: _mobileTextEditingController.text,
       contryCode: countryCode!,
         email: _emailEditingController.text,
-         // image: null,
-        name: _nameTextEditingController.text,
+      // image: null,
+        firstName: _firstNameTextEditingController.text,
+        lastName: _lastNameTextEditingController.text,
         password: _passwordTextEditingController.text);
 
  if(success) {
