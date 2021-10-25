@@ -12,7 +12,7 @@ class CarsControllerApi{
     var url = Uri.parse(ApiSettings.CARS);
     var response = await http.get(url);
     if(response.statusCode == 200){
-      var jsonResponse = jsonDecode(response.body)['data'] as List;
+      var jsonResponse = jsonDecode(response.body)['data']['data'] as List;
 
       List<Cars> cars = jsonResponse.map((e) => Cars.fromJson(e)).toList();
       print(cars);
