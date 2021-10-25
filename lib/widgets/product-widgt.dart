@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:saman_project/api/api_settings.dart';
 import 'package:saman_project/getx/car_details_getx_controller.dart';
+import 'package:saman_project/getx/wishlist_getx_controller.dart';
 import 'package:saman_project/models/cars.dart';
 import 'package:saman_project/screens/product-details.dart';
 import 'package:saman_project/utils/constans.dart';
@@ -48,10 +49,12 @@ class ProductWidget extends StatelessWidget {
             child: CircleAvatar(
               radius: SizeConfig.scaleHeight(15),
               backgroundColor: Colors.white,
-              child: Icon(
-                Icons.favorite_outline,
+              child: IconButton(
+                icon: Icon(Icons.favorite_outline,size: SizeConfig.scaleHeight(12),),
+                onPressed: (){
+                  WishlistGetxController.to.addToWishList(cars.id);
+                },
                 color: kPrimaryColor,
-                size: SizeConfig.scaleHeight(12),
               ),
             ),
           ),

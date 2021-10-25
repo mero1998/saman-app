@@ -14,12 +14,12 @@ class BrandControllerApi{
     var url = Uri.parse(ApiSettings.BRANDS);
     var response = await http.get(url, headers: {
       // HttpHeaders.authorizationHeader : UserPreferences().getApiKey(),
-      HttpHeaders.authorizationHeader : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
+      HttpHeaders.authorizationHeader : UserPreferences().getToken(),
     });
     print("Brand Code : ${response.statusCode}");
     if(response.statusCode == 200){
       print("Brand Code : ${response.statusCode}");
-      var jsonResponse = jsonDecode(response.body)['data'] as List;
+      var jsonResponse = jsonDecode(response.body)['success']['data'] as List;
       print("Brands : $jsonResponse");
       List<Brands> brands = jsonResponse.map((e) => Brands.fromJson(e)).toList();
       return brands;

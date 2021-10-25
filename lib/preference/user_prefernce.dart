@@ -18,13 +18,12 @@ class UserPreferences {
 
   Future save(User user) async {
     await _sharedPreferences.setBool('logged_in', true);
-    await _sharedPreferences.setInt('id', user.user!.id);
-    await _sharedPreferences.setString('name', user.user!.first_name);
+    await _sharedPreferences.setString('name', user.user!.firstName);
     await _sharedPreferences.setString('mobile', user.user!.mobile);
     await _sharedPreferences.setString('email', user.user!.email);
     await _sharedPreferences.setString('country_code', user.user!.contryCode);
-    await _sharedPreferences.setString('apiKey', user.token!.substring(39));
-    await _sharedPreferences.setString('token', user.token!);
+    // await _sharedPreferences.setString('apiKey', user.token!.substring(39));
+    await _sharedPreferences.setString('token', user.token);
 
   }
 

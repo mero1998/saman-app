@@ -57,10 +57,7 @@ class Blog {
  late int id;
  late String title;
  late String description;
- late String image;
  late String createdAt;
- late String updatedAt;
- late String status;
  late String imageUrl;
 
 
@@ -68,10 +65,7 @@ class Blog {
     id = json['id'];
     title = json['title'];
     description = json['description'];
-    image = json['image'];
     createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    status = json['status'];
     imageUrl = json['image_url'];
   }
 
@@ -80,10 +74,7 @@ class Blog {
     data['id'] = this.id;
     data['title'] = this.title;
     data['description'] = this.description;
-    data['image'] = this.image;
     data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['status'] = this.status;
     data['image_url'] = this.imageUrl;
     return data;
   }

@@ -93,7 +93,7 @@ class BlogItem extends StatelessWidget {
                       vertical: SizeConfig.scaleHeight(8)),
                   height: SizeConfig.scaleHeight(20),
                   child: Text(
-                   blog.updatedAt,
+                   blog.createdAt,
                     style: TextStyle(
                         fontSize: SizeConfig.scaleTextFont(15),
                         fontFamily: 'Cairo'),

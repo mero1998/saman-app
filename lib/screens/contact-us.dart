@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:saman_project/contorller/contact_api_message.dart';
 import 'package:saman_project/utils/constans.dart';
 import 'package:saman_project/utils/size-config.dart';
 
 class ContactUs extends StatelessWidget {
+
+late TextEditingController _nameTextEditingController = TextEditingController();
+late TextEditingController _emailTextEditingController = TextEditingController();
+late TextEditingController _messageTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,16 +59,19 @@ class ContactUs extends StatelessWidget {
         child: Column(
           children: [
             InputField(
+              controller: _nameTextEditingController,
               hintText: 'الاسم',
               height: SizeConfig.scaleHeight(49),
             ),
             InputField(
+              controller: _emailTextEditingController,
               hintText: 'البريد الالكتروني',
               height: SizeConfig.scaleHeight(49),
               linesNumber: 2,
               keyboardType: TextInputType.emailAddress,
             ),
             InputField(
+              controller: _messageTextEditingController,
               hintText: 'اكتب الرسالة هنا',
               height: SizeConfig.scaleHeight(112),
             ),
@@ -74,7 +83,7 @@ class ContactUs extends StatelessWidget {
                 bottom: SizeConfig.scaleHeight(12),
               ),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () =>  performSendMessage(),
                 child: Text(
                   'ارسال',
                   style: TextStyle(
@@ -98,6 +107,24 @@ class ContactUs extends StatelessWidget {
       ),
     );
   }
+Future performSendMessage() async{
+    print("Click");
+  if(checkData()){
+  await sendMessage();
+  }
+}
+
+bool checkData(){
+  if(_nameTextEditingController.text.isNotEmpty && _emailTextEditingController.text.isNotEmpty && _messageTextEditingController.text.isNotEmpty){
+    return true;
+  }
+  return false;
+}
+
+
+Future<bool> sendMessage() async{
+    return await ContactApiMessage().sendContactMessage(name: _nameTextEditingController.text, email: _emailTextEditingController.text, message: _messageTextEditingController.text);
+}
 }
 
 class InputField extends StatelessWidget {
@@ -105,9 +132,11 @@ class InputField extends StatelessWidget {
   final double? height;
   final int linesNumber;
   final TextInputType keyboardType;
+  final TextEditingController controller;
 
   const InputField(
-      {this.hintText,
+      {required this.controller,
+        this.hintText,
       this.height,
       this.linesNumber = 1,
       this.keyboardType = TextInputType.text});
@@ -128,7 +157,7 @@ class InputField extends StatelessWidget {
       ),
       height: height,
       child: TextField(
-          // controller: textEditingController,
+          controller: controller,
           maxLines: 5,
           minLines: linesNumber,
           keyboardType: keyboardType,
@@ -146,4 +175,5 @@ class InputField extends StatelessWidget {
           )),
     );
   }
+
 }

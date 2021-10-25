@@ -5,6 +5,7 @@ import 'package:saman_project/getx/brand_controller_getx.dart';
 import 'package:saman_project/getx/car_details_getx_controller.dart';
 import 'package:saman_project/getx/cars_controller_getx.dart';
 import 'package:saman_project/getx/home_controller_getx.dart';
+import 'package:saman_project/getx/paln_getx_controller.dart';
 import 'package:saman_project/getx/user_getx_controller.dart';
 import 'package:saman_project/preference/user_prefernce.dart';
 import 'package:saman_project/utils/size-config.dart';
@@ -25,6 +26,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
 BlogControllerGetx blogControllerGetx = Get.put(BlogControllerGetx());
 UserGetxController userControllerGetx = Get.put(UserGetxController());
     CarDetailsGetxController carDetailsGetxController = Get.put(CarDetailsGetxController());
+    PlanGetxController plansGetxController = Get.put(PlanGetxController());
 
     Future.delayed(Duration(seconds: 3), () {
       String route = UserPreferences().isLoggedIn ? "/main_screen" : "/on-boarding";

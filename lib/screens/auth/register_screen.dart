@@ -217,16 +217,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     print(_passwordTextEditingController.text);
     print(_confPasswordTextEditingController.text);
  bool success =  await UserApiController().register(
-
         mobile: _mobileTextEditingController.text,
       contryCode: countryCode!,
         email: _emailEditingController.text,
-      // image: null,
         firstName: _firstNameTextEditingController.text,
         lastName: _lastNameTextEditingController.text,
         password: _passwordTextEditingController.text);
-
- if(success) {
+  print("We are here");
+  if(success) {
    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>
        VerifyAccountScreen(mobile: _mobileTextEditingController.text, countryCode: countryCode!,)), (
        route) => false);

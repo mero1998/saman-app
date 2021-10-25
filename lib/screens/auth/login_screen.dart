@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
     User? user = await UserApiController().login(context , email: _emailTextEditingController.text, password : _passwordTextEditingController.text);
     if(user != null){
       print("We are here2");
-      print(user.user!.id);
+      // print(user.request!.id);
         UserPreferences().save(user);
         Future.delayed(Duration(seconds: 2), (){
           Navigator.pushReplacementNamed(context,"/main_screen");

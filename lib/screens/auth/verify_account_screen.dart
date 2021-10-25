@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:saman_project/contorller/user_api_controller.dart';
+import 'package:saman_project/models/user.dart';
+import 'package:saman_project/preference/user_prefernce.dart';
 import 'package:saman_project/utils/app_color.dart';
 import 'package:saman_project/utils/size-config.dart';
 import 'package:saman_project/widgets/button_app.dart';
@@ -106,6 +108,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                         fontSize: SizeConfig.scaleTextFont(23),
                         color: Colors.black
                       ),
+
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                         fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
@@ -270,7 +273,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
           ),
           SizedBox(height: SizeConfig.scaleHeight(27),),
 
-          ButtonApp(text: "التالي", width: double.infinity, height: 59, onPressed: () {} /*{ performVerify() },*/ ),
+          ButtonApp(text: "التالي", width: double.infinity, height: 59, onPressed: (){ performVerify(); }, ),
           SizedBox(height: SizeConfig.scaleHeight(21),),
 
         ],
@@ -297,14 +300,15 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   }
 
 
-  Future verify() async{
+  Future<User?> verify() async{
 
-    bool active  = await UserApiController().verifyOtp(code: getCode(),mobile: widget.mobile, countryCode: widget.countryCode);
-
-    if(active){
-     Navigator.pushNamedAndRemoveUntil(context, "/login_screen", (route) => false);
+    User? user  = await UserApiController().verifyOtp(context ,code: getCode(),mobile: widget.mobile, countryCode: widget.countryCode);
+    if(user != null){
+      UserPreferences().save(user);
+     Navigator.pushNamedAndRemoveUntil(context, "/main_screen", (route) => false);
+    }else{
+      return null;
     }
-
   }
 
   String getCode(){

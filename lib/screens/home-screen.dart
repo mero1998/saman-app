@@ -8,6 +8,7 @@ import 'package:saman_project/getx/brand_controller_getx.dart';
 import 'package:saman_project/getx/cars_controller_getx.dart';
 import 'package:saman_project/getx/cart_getx_controller.dart';
 import 'package:saman_project/getx/home_controller_getx.dart';
+import 'package:saman_project/getx/wishlist_getx_controller.dart';
 import 'package:saman_project/models/blog.dart';
 import 'package:saman_project/models/cars.dart';
 import 'package:saman_project/utils/constans.dart';
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     CarsGetxController.to.getCars();
+    WishlistGetxController controller = Get.put(WishlistGetxController());
     // selectNew ? CarsGetxController.to.indexOldCars("1") : CarsGetxController.to.indexCars();
   }
 

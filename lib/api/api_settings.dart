@@ -13,5 +13,7 @@ class ApiSettings{
   static const LOGOUT =  BASE_URL_API + "logout";
   static const PROFILEIMAGE =  BASE_URL_API + "updateProfileImage";
   static const ADDTOWISHLIST =  BASE_URL_API + "addToWishlist";
+  static const PLANS =  BASE_URL_API + "plans";
+  static const CONTACTS =  BASE_URL_API + "contact";
 
 }

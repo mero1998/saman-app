@@ -23,55 +23,59 @@ import 'package:saman_project/utils/helpers.dart';
 
 
 class UserApiController with Helper{
+
   Future<bool> register({
     required String email,
     required String firstName,
     required String lastName,
     required String password,
     required String mobile,
-    required String contryCode,
-    /*File? image */}) async {
+    required String contryCode,}) async {
     var url = Uri.parse(ApiSettings.REGISTER_USER);
-
-    var response = await http.post(url, body: {
-      "first_name" : firstName,
-      "last_name" : lastName,
-      "email": email,
-      "contryCode" : contryCode,
-      "mobile": mobile,
-      "password": password,
-      "c_password": password,
-      // "image": image,
-    });
+    print(url);
+    var response = await http.post(url,
+        headers: {
+        "Accept": "application/json"
+        },
+        body: {
+          "first_name" : firstName,
+          "last_name" : lastName,
+          "email" : email,
+          "mobile" : mobile,
+          "contryCode" : contryCode,
+          "password" : password,
+          "c_password" : password,
+        });
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      Get.snackbar("تمت العملية بنجاح", jsonDecode(response.body)['message'], backgroundColor: Colors.green);
-
+      Get.snackbar("تمت العملية بنجاح", jsonDecode(response.body)["Message"], backgroundColor: Colors.green);
       return true;
     }
-
-    Get.snackbar("خطأ", jsonDecode(response.body)['message']);
+    print("Error ${jsonDecode(response.body)["message"]}");
+    // Get.snackbar("خطأ", jsonDecode(response.body));
     return false;
   }
-
-  Future<bool> verifyOtp(
-      {required String code,required String mobile,required String countryCode}) async{
-
+  Future<User?> verifyOtp(BuildContext context,{required String code,required String mobile,required String countryCode}) async{
     var url = Uri.parse(ApiSettings.OTPVERIFY);
-    var response = await http.post(url, body: {
+    var response = await http.post(url,
+        body: {
       "mobile": mobile,
       "otp" : code,
       "contryCode" : countryCode
      });
+
     if(response.statusCode == 200){
-      Get.snackbar("نجاح", "تم انشاء الحساب بنجاح");
-      return true;
-    }else{
+  print(response.statusCode);
+//1341
+  var jsonResponse = jsonDecode(response.body)['success'];
+  return User.fromJson(jsonResponse);
 
-      Get.snackbar("خطأ", "الكود غير صالح");
-      return false;
+ }else{
+      Get.snackbar("خطأ", "البيانات المدخلة غير صحيحة" , backgroundColor: Colors.red);
+      showSnackBar(context, jsonDecode(response.body)['message'], error: true);
+      return null;
     }
-
-  }
+}
 
   Future<User?> login(BuildContext context ,{required String email,required String password}) async{
 
@@ -164,8 +168,8 @@ class UserApiController with Helper{
 
     var url  = Uri.parse(ApiSettings.LOGOUT);
     var response = await http.get(url , headers: {
-      HttpHeaders.authorizationHeader : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-      "Accept" : "application/json"
+      HttpHeaders.authorizationHeader : UserPreferences().getToken(),
+      // "Accept" : "application/json"
     });
     if(response.statusCode == 200){
       UserPreferences().logout();
@@ -181,5 +185,6 @@ class UserApiController with Helper{
     return false;
 
   }
+
 
 }

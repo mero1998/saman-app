@@ -15,6 +15,7 @@ class CarsControllerApi{
       var jsonResponse = jsonDecode(response.body)['data'] as List;
 
       List<Cars> cars = jsonResponse.map((e) => Cars.fromJson(e)).toList();
+      print(cars);
       return cars;
     }
 
