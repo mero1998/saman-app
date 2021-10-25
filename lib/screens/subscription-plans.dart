@@ -38,6 +38,7 @@ class SubscriptionPlans extends StatelessWidget {
         builder: (PlanGetxController controller) {
           print(controller.plans.length);
           return ListView.builder(
+            itemCount: controller.plans.length,
             padding:EdgeInsets.symmetric(
                 horizontal: SizeConfig.scaleWidth(16),
                 vertical: SizeConfig.scaleHeight(30)),
@@ -125,8 +126,8 @@ class SubscriptionPlans extends StatelessWidget {
                                       shrinkWrap: true,
                                       physics: ScrollPhysics(),
                                       itemCount: controller.plans[index].points.length,
-                                      itemBuilder: (context, index) {
-                                        return Features(title: controller.plans[index].points[index].name!.ar,);
+                                      itemBuilder: (context, index2) {
+                                        return Features(title: controller.plans[index].points[index2].name!.ar,);
                                     },)
                                 )
                               ],
