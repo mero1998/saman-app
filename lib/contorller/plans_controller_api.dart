@@ -13,9 +13,8 @@ class PlansControllerApi{
     if(response.statusCode == 200){
       var jsonResponse = jsonDecode(response.body)['success']['data'] as List;
 
-      List<Plan> cars = jsonResponse.map((e) => Plan.fromJson(e)).toList();
-      print(cars);
-      return cars;
+      List<Plan> palns = jsonResponse.map((e) => Plan.fromJson(e)).toList();
+      return palns;
     }
 
     return [];

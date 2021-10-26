@@ -30,7 +30,9 @@ class UserApiController with Helper{
     required String lastName,
     required String password,
     required String mobile,
-    required String contryCode,}) async {
+    required String contryCode,
+    required String countryName,
+  }) async {
     var url = Uri.parse(ApiSettings.REGISTER_USER);
     print(url);
     var response = await http.post(url,
@@ -45,6 +47,7 @@ class UserApiController with Helper{
           "contryCode" : contryCode,
           "password" : password,
           "c_password" : password,
+          "countryName" : countryName,
         });
     print(response.statusCode);
     if (response.statusCode == 200) {
@@ -57,8 +60,9 @@ class UserApiController with Helper{
   }
   Future<User?> verifyOtp(BuildContext context,{required String code,required String mobile,required String countryCode}) async{
     var url = Uri.parse(ApiSettings.OTPVERIFY);
-    var response = await http.post(url,
-        body: {
+    var response = await http.post(url,headers: {
+      "Accept" : "application/json",
+    }, body: {
       "mobile": mobile,
       "otp" : code,
       "contryCode" : countryCode
@@ -68,6 +72,7 @@ class UserApiController with Helper{
   print(response.statusCode);
 //1341
   var jsonResponse = jsonDecode(response.body)['success'];
+  print(jsonDecode(response.body)['error']);
   return User.fromJson(jsonResponse);
 
  }else{
@@ -151,16 +156,60 @@ class UserApiController with Helper{
 
   Future<bool> resetPassword(BuildContext context,{required String oldPassword,required String newPassword}) async{
 
-    var url = Uri.parse(ApiSettings.CHANGEPASSWORD + "?old_password=$oldPassword&password=$newPassword ad&confirm_password=$newPassword");
+    var url = Uri.parse(ApiSettings.CHANGEPASSWORD);
     var response = await http.post(url , headers: {
-      HttpHeaders.authorizationHeader : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9",
-    });
+      HttpHeaders.authorizationHeader : UserPreferences().getToken(),
+    }, body: {
+      "old_password" : oldPassword,
+      "password" : newPassword,
+      "password_confirmation" : newPassword
+    }
+
+    );
     if(response.statusCode == 200){
       return true;
     }
     return false;
   }
 
+
+  Future<UserDetails?> updateProfileData({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String mobile,
+    required String contryCode,
+    required String countryName,
+    required String path,
+}) async{
+    var url = Uri.parse(ApiSettings.UPDATEPROFIE);
+    print(url);
+
+    var response = await http.post(url,
+        headers: {
+          HttpHeaders.authorizationHeader : UserPreferences().getToken(),
+          "Accept": "application/json"
+        },
+        body: {
+          "first_name" : firstName,
+          "last_name" : lastName,
+          "email" : email,
+          "phone" : mobile,
+          "countryCode" : contryCode,
+          "countryName" : countryName,
+        });
+
+    print("User Data : ${response.statusCode}");
+    if (response.statusCode == 200) {
+      var jsonResponse  = jsonDecode(response.body)['data'];
+      print(jsonResponse);
+      print("Update Successfull");
+      return UserDetails.fromJson(jsonResponse);
+    }
+    print("Error ${jsonDecode(response.body)["message"]}");
+    // Get.snackbar("خطأ", jsonDecode(response.body));
+    return null;
+  }
 
 
 

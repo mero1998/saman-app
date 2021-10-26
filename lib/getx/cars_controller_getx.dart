@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:saman_project/contorller/car_controller_api.dart';
 import 'package:saman_project/models/cars.dart';
+import 'package:saman_project/models/cart.dart';
 
 class CarsGetxController extends GetxController{
 
@@ -9,6 +10,7 @@ class CarsGetxController extends GetxController{
   RxList<Cars> oldCars = <Cars>[].obs;
   RxList<Cars> carsFilter = <Cars>[].obs;
   RxList<Cars> showCars = <Cars>[].obs;
+  RxList<Cars> carsWithBrand = <Cars>[].obs;
 
 
   RxBool  selectNew = false.obs;
@@ -17,7 +19,6 @@ class CarsGetxController extends GetxController{
   
   static CarsGetxController get to => Get.find();
   CarsControllerApi carsControllerApi = CarsControllerApi();
-
 
   @override
   void onInit() async {
@@ -34,6 +35,9 @@ class CarsGetxController extends GetxController{
     print("From Index :${cars.value}");
   }
 
+  void getCarsWithBrand({required String brandId}){
+    carsWithBrand.value = cars.where((e) => e.brandId == brandId).toList();
+  }
   void getCars(){
     if(selectNew.value){
      newCars.value = cars.where((e) => e.isOld == "0").toList();

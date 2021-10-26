@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:saman_project/contorller/cart_controller.dart';
+import 'package:saman_project/getx/cart_getx_controller.dart';
 import 'package:saman_project/utils/constans.dart';
 import 'package:saman_project/utils/size-config.dart';
 import 'package:saman_project/widgets/my-small-button.dart';
@@ -13,7 +16,12 @@ class _MyCartState extends State<MyCart> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      // child: GetX<CartGetxController>(
+      //   builder: (CartGetxController controller) {
+      //     return
+      //   },
+      // ),
+      child:  Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -36,34 +44,34 @@ class _MyCartState extends State<MyCart> {
                 color: kGrayColor,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal:SizeConfig.scaleWidth(25.5),
-                    vertical: SizeConfig.scaleHeight(15)
-                    
+                      horizontal:SizeConfig.scaleWidth(25.5),
+                      vertical: SizeConfig.scaleHeight(15)
+
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                RichText(text: TextSpan(
-                  //create varibale to change price
-                    text:'المجموع  ',
-                    style: TextStyle(
-                      color: Colors.black,
-                        fontSize: SizeConfig.scaleTextFont(16),
-                        fontFamily: 'Cairo'
-                    ),
-                    children: [
-                      TextSpan(
-                        text: '5 عنصر',
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: SizeConfig.scaleTextFont(16),
-                            fontFamily: 'Cairo'
-                        ),
-                      )
-                    ]
+                      RichText(text: TextSpan(
+                        //create varibale to change price
+                          text:'المجموع  ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: SizeConfig.scaleTextFont(16),
+                              fontFamily: 'Cairo'
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '5 عنصر',
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: SizeConfig.scaleTextFont(16),
+                                  fontFamily: 'Cairo'
+                              ),
+                            )
+                          ]
 
-                ),
-                ),
+                      ),
+                      ),
                       GestureDetector(
                         onTap: (){},
                         child: Text(
@@ -72,7 +80,7 @@ class _MyCartState extends State<MyCart> {
                               color: kPrimaryColor,
                               fontSize: SizeConfig.scaleTextFont(16),
                               fontFamily: 'Cairo',
-                          fontWeight: FontWeight.normal),
+                              fontWeight: FontWeight.normal),
                         ),
                       ),
                     ],
@@ -84,8 +92,8 @@ class _MyCartState extends State<MyCart> {
               ),
               Container(
                 height: SizeConfig.scaleHeight(329),
-                child: ListView.builder(
-                  itemCount: 5,
+                child: Obx((){return ListView.builder(
+                  itemCount: CartGetxController.to.carts.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       margin: EdgeInsets.symmetric(
@@ -100,10 +108,15 @@ class _MyCartState extends State<MyCart> {
                       // ),
                       child: Row(
                         children: [
-                          CircleAvatar(
-                            radius: SizeConfig.scaleHeight(20),
-                            backgroundColor: Colors.red,
-                            child: Icon(Icons.close,color: Colors.white,size: SizeConfig.scaleHeight(25),),
+                          InkWell(
+                            onTap: (){
+                              CartGetxController.to.removeFromCart(carId: CartGetxController.to.carts[index].car!.id.toString());
+                            },
+                            child: CircleAvatar(
+                              radius: SizeConfig.scaleHeight(20),
+                              backgroundColor: Colors.red,
+                              child: Icon(Icons.close,color: Colors.white,size: SizeConfig.scaleHeight(25),),
+                            ),
                           ),
                           SizedBox(
                             width: SizeConfig.scaleWidth(4),
@@ -112,9 +125,13 @@ class _MyCartState extends State<MyCart> {
                             height: SizeConfig.scaleHeight(139),
                             width: SizeConfig.scaleWidth(127),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  SizeConfig.scaleHeight(20)),
-                              border: Border.all(color: Color(0XFFF45F5B)),
+                                borderRadius: BorderRadius.circular(
+                                    SizeConfig.scaleHeight(20)),
+                                border: Border.all(color: Color(0XFFF45F5B)),
+                                image: DecorationImage(
+                                  image: NetworkImage(CartGetxController.to.carts[index].car!.imageUrl ?? ""),
+
+                                )
                             ),
                           ),
                           SizedBox(
@@ -124,7 +141,7 @@ class _MyCartState extends State<MyCart> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'سيارة حديثة بشكل عصري',
+                                CartGetxController.to.carts[index].car!.name ?? "",
                                 style: TextStyle(
                                   fontFamily: 'Cairo',
                                   fontSize: SizeConfig.scaleTextFont(13),
@@ -134,7 +151,7 @@ class _MyCartState extends State<MyCart> {
                                 height: SizeConfig.scaleHeight(20),
                               ),
                               Text(
-                                '5000 ريال',
+                                "${CartGetxController.to.carts[index].car!.price} ريال",
                                 style: TextStyle(
                                   color: Color(0XFFF45F5B),
                                   fontFamily: 'Cairo',
@@ -147,7 +164,7 @@ class _MyCartState extends State<MyCart> {
                       ),
                     );
                   },
-                ),
+                );}),
               ),
               Container(
                 height: SizeConfig.scaleHeight(62),
@@ -168,7 +185,7 @@ class _MyCartState extends State<MyCart> {
                       ),
                       RichText(
                         text: TextSpan(
-                            //create varibale to change price
+                          //create varibale to change price
                             text: '50000 ',
                             style: TextStyle(
                                 color: kPrimaryColor,
@@ -180,7 +197,7 @@ class _MyCartState extends State<MyCart> {
                                 style: TextStyle(
                                     color: kPrimaryColor,
                                     fontSize:
-                                        SizeConfig.scaleTextFont(16),
+                                    SizeConfig.scaleTextFont(16),
                                     fontFamily: 'Cairo'),
                               )
                             ]),
@@ -195,15 +212,15 @@ class _MyCartState extends State<MyCart> {
                 onTap: (){},
                 buttonTitle: 'الدفع',
                 buttonColor: kPrimaryColor,
-              buttonHeight: SizeConfig.scaleHeight(35),
-              buttonLeftMargin: SizeConfig.scaleWidth(135),
-              buttonRightMargin: SizeConfig.scaleWidth(135),),
+                buttonHeight: SizeConfig.scaleHeight(35),
+                buttonLeftMargin: SizeConfig.scaleWidth(135),
+                buttonRightMargin: SizeConfig.scaleWidth(135),),
               SizedBox(
                 height: SizeConfig.scaleHeight(13),
               )
             ],
           ),
-      ),
+        ),
     );
   }
 }

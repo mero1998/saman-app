@@ -34,6 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String initialCountry = 'NG';
   PhoneNumber number = PhoneNumber(isoCode: 'NG');
 
+  String countryName = "";
 
   int? cityId;
 
@@ -67,7 +68,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
- // GetxControllerCiteis controller = Get.put(GetxControllerCiteis());
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -99,8 +99,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         onInputChanged: (PhoneNumber number) {
           print(number.phoneNumber);
           print(number.dialCode);
+          print(number.isoCode);
         setState(() {
           countryCode = number.dialCode;
+          countryName = number.isoCode!;
         });
           },
         hintText: "رقم الموبايل",
@@ -140,6 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           print('On Saved: $number');
           setState(() {
             countryCode = number.dialCode;
+            countryName = number.isoCode!;
           });
         },
       ),
@@ -208,7 +211,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
  //
   Future register()async {
-
     print(_mobileTextEditingController.text);
     print(countryCode);
     print(_emailEditingController.text);
@@ -216,13 +218,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     print(_lastNameTextEditingController.text);
     print(_passwordTextEditingController.text);
     print(_confPasswordTextEditingController.text);
+    print(countryName);
  bool success =  await UserApiController().register(
         mobile: _mobileTextEditingController.text,
       contryCode: countryCode!,
         email: _emailEditingController.text,
         firstName: _firstNameTextEditingController.text,
         lastName: _lastNameTextEditingController.text,
-        password: _passwordTextEditingController.text);
+        password: _passwordTextEditingController.text,
+        countryName: countryName,
+ );
   print("We are here");
   if(success) {
    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>

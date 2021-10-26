@@ -7,83 +7,41 @@ import 'package:saman_project/models/cart.dart';
 
 class CartGetxController extends GetxController {
 
-  RxList<Cart> closets = <Cart>[].obs;
+  RxList<Cart> carts = <Cart>[].obs;
   RxInt amount = 0.obs;
-   CartController closetController = CartController();
+   CartController cartController = CartController();
   static CartGetxController get to => Get.find();
 
   @override
   void onInit() {
     // TODO: implement onInit
-    readCloset();
-    // amount.value = closets.map((element) => element.total_amount).reduce((value, element) => value + element);
+    indexCart();
+    // amount.value = cart.map((element) => element.).reduce((value, element) => value + element);
     super.onInit();
   }
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    // closets.clear();
-    super.onClose();
-  }
-
-
-  Future<bool> create(Cart cart) async {
-    int id = await closetController.create(cart);
-    if(id != 0){
-      print(id);
-      cart.id = id;
-      closets.add(cart);
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> readCloset() async {
-    closets.value = await closetController.read();
-
-  }
-
-
-  // Future<int> totalAmount(Closet closet) async{
-  //   int index = closets.indexWhere((element) => element.id == closet.id);
-  //   return await closets[index].price * closets[index].product_quantity;
-  //
-  // }
-
-
-
-
-  Future<bool> deleteProductFromCart(int id ) async {
-print(closets.length);
-    bool deleted = await closetController.delete(id);
-print(closets.length);
-print(deleted);
- if(deleted){
-      int index = closets.indexWhere((element) => element.id == id);
-      print(index);
-      if(index != -1){
-        closets.removeAt(index);
-        closets.refresh();
-        return true;
+  Future<bool> addToCart({required String carId}) async {
+    print("************ add");
+  Cart? cart =  await cartController.addToCart(carId: carId);
+      if(cart != null){
+        carts.add(cart);
       }
-    }
-    return false;
+      return cart != null;
   }
 
-
-  Future<bool> deleteProductAllProducts() async {
-    print(closets.length);
-    bool deleted = await closetController.deleteAll();
-    if(deleted){
-      closets.refresh();
-        return true;
-    }
-    return false;
+  Future<void> indexCart()async{
+    carts.value = await cartController.indexCart();
   }
-}
+
+  Future<bool> removeFromCart({required String carId}) async{
+   bool deleted = await cartController.removeFromCart(carId: carId);
+   int index = carts.indexWhere((element) => element.car!.id == carId);
+   print(index);
+   if(index != -1) {
+     print(deleted);
+     carts.removeAt(index);
+    carts.refresh();
+   }
+     return deleted;
+   }
+  }

@@ -3,15 +3,16 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:saman_project/api/api_settings.dart';
+import 'package:saman_project/preference/user_prefernce.dart';
 import 'package:saman_project/utils/helpers.dart';
 class ImageApiController with Helper{
 
   Future<bool> uploadImage( BuildContext context , String path) async {
-    var url = Uri.parse(ApiSettings.PROFILEIMAGE);
+    var url = Uri.parse(ApiSettings.UPDATEPROFILEIMAGE);
     var request  = http.MultipartRequest("POST" , url);
     var image = await http.MultipartFile.fromPath("image" , path);
     request.files.add(image);
-    request.headers[HttpHeaders.authorizationHeader] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9";
+    request.headers[HttpHeaders.authorizationHeader] = UserPreferences().getToken();
 
     var response = await request.send();
     response.stream.transform(utf8.decoder).listen((event) {
@@ -19,7 +20,9 @@ class ImageApiController with Helper{
       showSnackBar(context, jsonDecode(event)["message"]);
     });
 
-    if(response.statusCode < 400){
+    print(response.statusCode);
+    if(response.statusCode == 200){
+      print(response.statusCode);
       return true;
     }
     return false;

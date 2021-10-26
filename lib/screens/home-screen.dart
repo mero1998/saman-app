@@ -8,9 +8,12 @@ import 'package:saman_project/getx/brand_controller_getx.dart';
 import 'package:saman_project/getx/cars_controller_getx.dart';
 import 'package:saman_project/getx/cart_getx_controller.dart';
 import 'package:saman_project/getx/home_controller_getx.dart';
+import 'package:saman_project/getx/partners_controller_getx.dart';
+import 'package:saman_project/getx/reviwes_controller_getx.dart';
 import 'package:saman_project/getx/wishlist_getx_controller.dart';
 import 'package:saman_project/models/blog.dart';
 import 'package:saman_project/models/cars.dart';
+import 'package:saman_project/screens/cars_with_brand.dart';
 import 'package:saman_project/utils/constans.dart';
 import 'package:saman_project/widgets/consultation.dart';
 import 'package:saman_project/widgets/customera-comments.dart';
@@ -346,17 +349,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           //customer Comment
-          Container(
-            margin: EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
-            height: SizeConfig.scaleHeight(194),
-            width: double.infinity,
-            child: ListView.builder(
-                clipBehavior: Clip.none,
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return CustomersComments();
-                }),
+          GetX<ReviwesControllerGetx>(
+            builder: (ReviwesControllerGetx controller) {
+              return  Container(
+                  margin: EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
+              height: SizeConfig.scaleHeight(194),
+              width: double.infinity,
+              child: ListView.builder(
+              clipBehavior: Clip.none,
+              itemCount: controller.reviews.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+              return CustomersComments(reviews: controller.reviews[index],);
+              }),
+              );
+            },
           ),
           Container(
             margin: EdgeInsets.only(
@@ -425,20 +432,24 @@ class Partners extends StatelessWidget {
             height: SizeConfig.scaleHeight(86),
             width: SizeConfig.scaleWidth(292),
             // color: Colors.greenAccent,
-            child: ListView.builder(
-                itemCount: 4,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.only(left: SizeConfig.scaleWidth(17)),
-                    height: SizeConfig.scaleHeight(86),
-                    width: SizeConfig.scaleWidth(86),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage('images/logo3.png'),
-                    )),
-                  );
-                }),
+            child: GetX<PartnersControllerGetx>(
+              builder: (PartnersControllerGetx controller) {
+                return ListView.builder(
+                    itemCount: controller.partners.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: EdgeInsets.only(left: SizeConfig.scaleWidth(17)),
+                        height: SizeConfig.scaleHeight(86),
+                        width: SizeConfig.scaleWidth(86),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(controller.partners[index].image),
+                            )),
+                      );
+                    });
+              },
+            ),
           ),
           GestureDetector(
             onTap: () {},
@@ -501,7 +512,6 @@ class BestMarcas extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetX<BrandControllerGetx>(
       builder: (BrandControllerGetx controller) {
-        print(controller.brands);
         return Container(
           margin: EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
           height: SizeConfig.scaleHeight(151),
@@ -510,17 +520,22 @@ class BestMarcas extends StatelessWidget {
               itemCount: controller.brands.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(left: SizeConfig.scaleWidth(16)),
-                  height: SizeConfig.scaleHeight(149),
-                  width: SizeConfig.scaleWidth(149),
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(SizeConfig.scaleHeight(20)),
-                      border: Border.all(color: Color(0XFFF45F5B)),
-                      image: DecorationImage(
-                        image: NetworkImage(controller.brands[index].image),
-                      )),
+                return InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CarsWithBrands(brandId: controller.brands[index].id)));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: SizeConfig.scaleWidth(16)),
+                    height: SizeConfig.scaleHeight(149),
+                    width: SizeConfig.scaleWidth(149),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(SizeConfig.scaleHeight(20)),
+                        border: Border.all(color: Color(0XFFF45F5B)),
+                        image: DecorationImage(
+                          image: NetworkImage(controller.brands[index].image),
+                        )),
+                  ),
                 );
               }),
         );

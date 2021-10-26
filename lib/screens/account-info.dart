@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:saman_project/contorller/images_api_controller.dart';
 import 'package:saman_project/getx/user_getx_controller.dart';
 import 'package:saman_project/utils/app_color.dart';
 import 'package:saman_project/utils/constans.dart';
@@ -13,16 +17,23 @@ class AccountInfo extends StatefulWidget {
 }
 
 class _AccountInfoState extends State<AccountInfo> {
-  TextEditingController _firstNameTextEditingController  = TextEditingController(text: UserGetxController.to.user.first!.first_name);
-  TextEditingController _lastNameTextEditingController = TextEditingController(text: UserGetxController.to.user.value.first!.last_name);
+  TextEditingController _firstNameTextEditingController  = TextEditingController(text: UserGetxController.to.user.first!.firstName);
+  TextEditingController _lastNameTextEditingController = TextEditingController(text: UserGetxController.to.user.value.first!.lastName);
   TextEditingController _mobileTextEditingController = TextEditingController(text: UserGetxController.to.user.value.first!.mobile);
   // TextEditingController country = TextEditingController(text: UserGetxController.to.user.value.first!.co);
   TextEditingController _emailTextEditingController  = TextEditingController(text: UserGetxController.to.user.value.first!.email);
+  TextEditingController _countryTextEditingController  = TextEditingController(text: UserGetxController.to.user.value.first!.country!.countryname);
 
-  String? countryCode = UserGetxController.to.user.first!.contryCode;
+  static String countryCode = UserGetxController.to.user.first!.countryCode;
 
-  String initialCountry = 'PS';
-  PhoneNumber number = PhoneNumber(isoCode: 'PS');
+  String initialCountry = countryCode;
+ // static String countryName = UserGetxController.to.user.first!.country!.countryname!;
+
+  PhoneNumber number = PhoneNumber(isoCode: countryCode);
+
+  XFile? _pickedFile;
+  ImagePicker _picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
       return Scaffold(
@@ -32,7 +43,6 @@ class _AccountInfoState extends State<AccountInfo> {
           height: double.infinity,
           child: Stack(
             children: [
-
               Container(
                 width: double.infinity,
                 height: SizeConfig.scaleHeight(344),
@@ -57,7 +67,6 @@ class _AccountInfoState extends State<AccountInfo> {
                 clipBehavior: Clip.antiAlias,
               ),
               Positioned(
-
                 bottom: SizeConfig.scaleHeight(46),
                 left: SizeConfig.scaleWidth(16),
                 right: SizeConfig.scaleWidth(16),
@@ -137,7 +146,7 @@ class _AccountInfoState extends State<AccountInfo> {
                           print(number.dialCode);
                           print(number.isoCode);
                           setState(() {
-                            countryCode = number.dialCode;
+                            countryCode = number.isoCode!;
                           });
                         },
                         hintText: "رقم الموبايل",
@@ -176,7 +185,8 @@ class _AccountInfoState extends State<AccountInfo> {
                         onSaved: (PhoneNumber number) {
                           print('On Saved: $number');
                           setState(() {
-                            countryCode = number.dialCode;
+                            countryCode = number.isoCode!;
+
                           });
                         },
                       ),
@@ -253,6 +263,7 @@ class _AccountInfoState extends State<AccountInfo> {
                           border: Border.all(color: kPrimaryColor ,width: 1),
                         ),
                         child: TextField(
+                          controller: _countryTextEditingController,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.search ,color: kPrimaryColor,),
                             hintText: 'الدولة',
@@ -271,7 +282,7 @@ class _AccountInfoState extends State<AccountInfo> {
                         width: double.infinity,
                         height: SizeConfig.scaleHeight(40),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async => await performUpdate(),
                           child: Text(
                             'حفظ',
                             style: TextStyle(
@@ -296,9 +307,14 @@ class _AccountInfoState extends State<AccountInfo> {
                 left: SizeConfig.scaleWidth(22),
                 child: Stack(
                     children:[
-                      CircleAvatar(
-                        radius: SizeConfig.scaleHeight(50),
-                        backgroundImage: AssetImage('images/hhr.jpg'),
+                      InkWell(
+                        onTap: () => pickImage(),
+                        child: CircleAvatar(
+                          radius: SizeConfig.scaleHeight(50),
+                          backgroundImage: _pickedFile != null ?  FileImage(File(_pickedFile!.path)) : FileImage(File(UserGetxController.to.user.first!.image!)),
+                          // child: Image.network(UserGetxController.to.user.first!.image!),
+                          foregroundImage: NetworkImage(UserGetxController.to.user.first!.image!),
+                        ),
                       ),
                       Positioned(
                         bottom: SizeConfig.scaleHeight(15),
@@ -313,15 +329,58 @@ class _AccountInfoState extends State<AccountInfo> {
               Positioned(
                 top: SizeConfig.scaleHeight(315),
                 left: SizeConfig.scaleWidth(121),
-                child: Text('Mohammed Jebreel',
+                child: Text(UserGetxController.to.user.first!.firstName + UserGetxController.to.user.first!.lastName,
                     style: TextStyle(
                         fontSize: SizeConfig.scaleTextFont(20),
                         color: Colors.white)),
-              )
+              ),
+
             ],
           ),
         ),
       );
 
   }
+
+
+  Future<void> pickImage() async {
+    _pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (_pickedFile != null) {
+      setState(() {});
+    }
+  }
+
+  Future<void> performUpdate() async{
+    print("click");
+    if(checkData()){
+      saveData();
+    }
+  }
+  bool checkData(){
+    if(_firstNameTextEditingController.text.isNotEmpty &&
+        _lastNameTextEditingController.text.isNotEmpty &&
+        _mobileTextEditingController.text.isNotEmpty &&
+         _emailTextEditingController.text.isNotEmpty){
+        return true;
+    }
+
+    return false;
+  }
+
+
+  Future saveData() async{
+    await UserGetxController.to.updateUserDetails(email: _emailTextEditingController.text, firstName: _firstNameTextEditingController.text, lastName: _lastNameTextEditingController.text, mobile: _mobileTextEditingController.text, countryCode: countryCode.toString(), countryName: countryCode, path: _pickedFile?.path);
+    uploadImage();
+  }
+  Future<void> uploadImage() async{
+    if(_pickedFile != null){
+      bool uploaded = await ImageApiController().uploadImage
+        ( context , _pickedFile!.path);
+    }else{
+      // showSnackBar(context, "Pick Image" , error: true);
+      print("Error");
+    }
+  }
+
+
 }

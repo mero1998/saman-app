@@ -170,18 +170,18 @@ class AboutUs extends StatelessWidget {
                 title: 'تقيمات عملائنا',
               ),
             ), //customer Comment
-            Container(
-              margin: EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
-              height: SizeConfig.scaleHeight(194),
-              width: double.infinity,
-              child: ListView.builder(
-                  clipBehavior: Clip.none,
-                  itemCount: 5,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CustomersComments();
-                  }),
-            ),
+            // Container(
+            //   margin: EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
+            //   height: SizeConfig.scaleHeight(194),
+            //   width: double.infinity,
+            //   child: ListView.builder(
+            //       clipBehavior: Clip.none,
+            //       itemCount: 5,
+            //       scrollDirection: Axis.horizontal,
+            //       itemBuilder: (BuildContext context, int index) {
+            //         return CustomersComments();
+            //       }),
+            // ),
             Container(
               margin: EdgeInsets.only(
                 top: SizeConfig.scaleHeight(20),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saman_project/contorller/user_api_controller.dart';
+import 'package:saman_project/getx/user_getx_controller.dart';
 import 'package:saman_project/utils/constans.dart';
 import 'package:saman_project/utils/size-config.dart';
 
@@ -93,7 +94,6 @@ late  TextEditingController _confNewPasswordTextEditingController;
                 height: SizeConfig.scaleHeight(365),
 
                 child: Column(
-
                   children: [
 //TODO REFACTOR
                     Container  (
@@ -191,7 +191,7 @@ late  TextEditingController _confNewPasswordTextEditingController;
                   children:[
                     CircleAvatar(
                       radius: SizeConfig.scaleHeight(50),
-                      backgroundImage: AssetImage('images/hhr.jpg'),
+                      backgroundImage: NetworkImage(UserGetxController.to.user.first!.image!),
                     ),
                     Positioned(
                       bottom: SizeConfig.scaleHeight(15),
@@ -206,7 +206,7 @@ late  TextEditingController _confNewPasswordTextEditingController;
             Positioned(
               top: SizeConfig.scaleHeight(315),
               left: SizeConfig.scaleWidth(121),
-              child: Text('Mohammed Jebreel',
+              child: Text(UserGetxController.to.user.first!.firstName + UserGetxController.to.user.first!.lastName,
                   style: TextStyle(
                       fontSize: SizeConfig.scaleTextFont(20),
                       color: Colors.white)),

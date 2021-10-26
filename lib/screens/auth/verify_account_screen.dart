@@ -89,6 +89,8 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: TextField(
+                      textDirection: TextDirection.rtl,
+                      autofocus: true,
                       keyboardType: TextInputType.number,
                       controller: _firstCodeTextEditingController,
                       focusNode: _firstFocusNode,
@@ -97,7 +99,6 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                       maxLength: 1,
                       onChanged: (String text){
                         if(text.length == 1){
-
                           _secondFocusNode.requestFocus();
                         }
                       },
@@ -138,6 +139,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: TextField(
+                      textDirection: TextDirection.rtl,
                       keyboardType: TextInputType.number,
                       controller: _secondCodeTextEditingController,
                       focusNode: _secondFocusNode,
@@ -185,6 +187,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: TextField(
+                      textDirection: TextDirection.rtl,
                       keyboardType: TextInputType.number,
                       controller: _thirdCodeTextEditingController,
                       focusNode: _thirdFocusNode,
@@ -232,6 +235,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: TextField(
+                      textDirection: TextDirection.rtl,
                       keyboardType: TextInputType.number,
                       controller: _fourthCodeTextEditingController,
                       focusNode: _fourthFocusNode,
@@ -284,6 +288,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   Future performVerify() async {
 
     if(checkData()){
+      print(getCode());
       verify();
     }
   }
@@ -302,20 +307,21 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
 
   Future<User?> verify() async{
 
-    User? user  = await UserApiController().verifyOtp(context ,code: getCode(),mobile: widget.mobile, countryCode: widget.countryCode);
+    UserApiController userApiController = UserApiController();
+    User? user  = await userApiController.verifyOtp(context ,code: getCode(),mobile: widget.mobile, countryCode: widget.countryCode);
     if(user != null){
       UserPreferences().save(user);
-     Navigator.pushNamedAndRemoveUntil(context, "/main_screen", (route) => false);
+      print(user);
+      Navigator.pushNamedAndRemoveUntil(context, "/main_screen", (route) => false);
     }else{
       return null;
     }
   }
 
   String getCode(){
-
-    return _firstCodeTextEditingController.text +
-           _secondCodeTextEditingController.text+
-           _thirdCodeTextEditingController.text+
-           _fourthCodeTextEditingController.text;
+    return _fourthCodeTextEditingController.text+
+        _thirdCodeTextEditingController.text+
+        _secondCodeTextEditingController.text+
+        _firstCodeTextEditingController.text;
   }
 }

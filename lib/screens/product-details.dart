@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imageview360_nullsafe/imageview360_nullsafe.dart';
+import 'package:saman_project/contorller/cart_controller.dart';
 import 'package:saman_project/getx/car_details_getx_controller.dart';
+import 'package:saman_project/getx/cart_getx_controller.dart';
 import 'package:saman_project/models/cars.dart';
 import 'package:saman_project/utils/constans.dart';
 import 'package:saman_project/utils/size-config.dart';
@@ -11,8 +13,6 @@ import 'package:saman_project/widgets/product-widgt.dart';
 class ProductDetails extends StatefulWidget {
 
   Cars cars;
-
-
   ProductDetails({required this.cars});
 
   @override
@@ -56,6 +56,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     return GetX<CarDetailsGetxController>(
       builder: (CarDetailsGetxController controller) {
+        print(controller.carDetails.first!.brandId);
         return controller.carDetails.length != 0 ? Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -86,7 +87,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       PageView.builder(
                         controller: pageController,
-                        itemCount: controller.carDetails.first!.images.length,
+                        itemCount: controller.carDetails.first?.images.length,
                         onPageChanged: (index){
                           setState(() {
                             indexPage = index;
@@ -94,6 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         },
                         itemBuilder: (context, index){
                           var list = controller.carDetails.first!.images;
+                          // return Container();
                           // imageList.add(NetworkImage(controller.carDetails.first!.images[index].picUrl));
                           return  Image.network(list[index].picUrl, fit: BoxFit.cover,);
                     // return ImageView360(
@@ -111,54 +113,57 @@ class _ProductDetailsState extends State<ProductDetails> {
                     // );
                         },
                       ),
-                      PositionedDirectional(
-                        end: SizeConfig.scaleWidth(17),
-                        top: SizeConfig.scaleHeight(15),
-                        child: Column(
-                          // shrinkWrap: true,
-                          // physics: ScrollPhysics(),
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children:  [
-                            IconButton(onPressed: (){
-                              pageController.previousPage(duration: Duration(microseconds: 500), curve: Curves.easeInBack);
-                              indexPage == 0 ? pageController.jumpToPage(controller.carDetails.first!.images.length -1) : null;
-                            },
-                                icon:  Icon(Icons.arrow_upward, color: Colors.white, size: SizeConfig.scaleWidth(13),)),
-                          Container(
-                            width: SizeConfig.scaleWidth(50),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: ScrollPhysics(),
-                              itemCount: controller.carDetails.first!.images.length,
-                              itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: (){
-                                  for(int i = 0; i < controller.carDetails.first!.images.length; i++){
-                                    pageController.jumpToPage(i);
-                                  }
-                                },
-                                child: Container(
-                                  width: SizeConfig.scaleWidth(63),
-                                  height: SizeConfig.scaleHeight(41),
-                                  decoration: BoxDecoration(
-
-                                      borderRadius: BorderRadius.circular(10),
-                                      image:  DecorationImage(
-                                          image: NetworkImage(controller.carDetails.first!.images[index].picUrl),
-                                          fit: BoxFit.cover
-                                      )
-                                  ),
-                                ),
-                              );
+                      Visibility(
+                        visible:controller.carDetails.first!.images.length != 0,
+                        child: PositionedDirectional(
+                          end: SizeConfig.scaleWidth(17),
+                          top: SizeConfig.scaleHeight(15),
+                          child: Column(
+                            // shrinkWrap: true,
+                            // physics: ScrollPhysics(),
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children:  [
+                              IconButton(onPressed: (){
+                                pageController.previousPage(duration: Duration(microseconds: 500), curve: Curves.easeInBack);
+                                indexPage == 0 ? pageController.jumpToPage(controller.carDetails.first!.images.length -1) : null;
                               },
-                                ),
+                                  icon:  Icon(Icons.arrow_upward, color: Colors.white, size: SizeConfig.scaleWidth(13),)),
+                            Container(
+                              width: SizeConfig.scaleWidth(50),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemCount: controller.carDetails.first!.images.length,
+                                itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: (){
+                                    for(int i = 0; i < controller.carDetails.first!.images.length; i++){
+                                      pageController.jumpToPage(i);
+                                    }
+                                  },
+                                  child: Container(
+                                    width: SizeConfig.scaleWidth(63),
+                                    height: SizeConfig.scaleHeight(41),
+                                    decoration: BoxDecoration(
+
+                                        borderRadius: BorderRadius.circular(10),
+                                        // image:  DecorationImage(
+                                        //     image: NetworkImage(controller.carDetails.first!.images[index].picUrl),
+                                        //     fit: BoxFit.cover
+                                        // )
+                                    ),
+                                  ),
+                                );
+                                },
+                                  ),
+                            ),
+                              IconButton(onPressed: (){
+                                pageController.nextPage(duration: Duration(microseconds: 500), curve: Curves.easeInBack);
+                                indexPage == controller.carDetails.first!.images.length -1 ? pageController.jumpToPage(0) : null;
+                              }, icon:  Icon(Icons.arrow_downward,color: Colors.white, size: SizeConfig.scaleWidth(13),)),
+                            ],
                           ),
-                            IconButton(onPressed: (){
-                              pageController.nextPage(duration: Duration(microseconds: 500), curve: Curves.easeInBack);
-                              indexPage == controller.carDetails.first!.images.length -1 ? pageController.jumpToPage(0) : null;
-                            }, icon:  Icon(Icons.arrow_downward,color: Colors.white, size: SizeConfig.scaleWidth(13),)),
-                          ],
                         ),
                       ),
                     ],
@@ -185,7 +190,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         btnColor: kPrimaryColor,
                       ),
                       ButtonW(
-                        onTap: (){},
+                        onTap: (){
+        CartGetxController.to.addToCart(carId: widget.cars.id.toString());
+                        },
                         title: Text(
                           'اضف الى السلة',
                           style: TextStyle(

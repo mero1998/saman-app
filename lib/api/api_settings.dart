@@ -15,5 +15,12 @@ class ApiSettings{
   static const ADDTOWISHLIST =  BASE_URL_API + "addToWishlist";
   static const PLANS =  BASE_URL_API + "plans";
   static const CONTACTS =  BASE_URL_API + "contact";
+  static const UPDATEPROFILEIMAGE =  BASE_URL_API + "updateProfileImage";
+  static const UPDATEPROFIE =  BASE_URL_API + "updateProfile";
+  static const ADDTOCART =  BASE_URL_API + "addToCart";
+  static const GETCART =  BASE_URL_API + "getCart";
+  static const REMOVEFROMCART =  BASE_URL_API + "removeFromCart";
+  static const PARTNERS =  BASE_URL_API + "partners";
+  static const REVIEWS =  BASE_URL_API + "reviews";
 
 }

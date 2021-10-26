@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:saman_project/models/reviews.dart';
 import 'package:saman_project/utils/size-config.dart';
 
 class CustomersComments extends StatelessWidget {
+
+  Reviews reviews;
+
+
+  CustomersComments({required this.reviews});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,17 +41,17 @@ class CustomersComments extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: SizeConfig.scaleHeight(40),
-            backgroundImage: AssetImage('images/carr.jpg'),
+            backgroundImage: NetworkImage(reviews.image),
           ),
           Text(
-            'فضل منصور',
+            reviews.name,
             style: TextStyle(
                 fontSize: SizeConfig.scaleTextFont(12),
                 fontFamily: 'Cairo',
                 fontWeight: FontWeight.bold),
           ),
           Text(
-            'خدمات رائعة ومميزة تقدمها شركتكم، سررت جدا بالاشتراك معكم في العديد من الخدمات',
+            reviews.reviews,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: SizeConfig.scaleTextFont(12),
