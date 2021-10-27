@@ -68,9 +68,6 @@ iconSize: SizeConfig.scaleHeight(28),
               activeColor: Colors.red,
               textAlign: TextAlign.center,
               inactiveColor: kPrimaryColor,
-
-
-
           ),
         ],
       ),

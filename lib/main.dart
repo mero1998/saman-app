@@ -36,7 +36,6 @@ void main() async {
   // HttpOverrides.global = MyHttpOverrides();
 
   WidgetsFlutterBinding.ensureInitialized();
-  await DbProvider().initDatabase();
   await UserPreferences().initPreferences();
 
   runApp(MyApp());

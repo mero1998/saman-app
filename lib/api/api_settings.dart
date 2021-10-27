@@ -22,5 +22,6 @@ class ApiSettings{
   static const REMOVEFROMCART =  BASE_URL_API + "removeFromCart";
   static const PARTNERS =  BASE_URL_API + "partners";
   static const REVIEWS =  BASE_URL_API + "reviews";
+  static const GETCOUNTCART =  BASE_URL_API + "getCartCount";
 
 }

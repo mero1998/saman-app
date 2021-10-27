@@ -19,7 +19,7 @@ class BlogControllerApi{
       print( "json : ${jsonDecode(response.body)}");
       print( "json Type : ${jsonDecode(response.body).runtimeType}");
        var jsonResponse = jsonDecode(response.body)['success']['data'] as List;
-    print(jsonResponse);
+    print(jsonResponse.runtimeType);
     return jsonResponse.map((e) => Blog.fromJson(e)).toList();
 
     }

@@ -19,10 +19,11 @@ class PartnersControllerApi{
 
     if(response.statusCode == 200){
       var jsonResponse =  jsonDecode(response.body)['success'];
-
       print("Response :  ${jsonResponse}");
-      List<Partners>  partners =  jsonResponse.map((e) => Partners.fromJson(e)).toList();
-        return partners;
+      print(jsonResponse.runtimeType);
+      return (jsonResponse as List).map((e) => Partners.fromJson(e)).toList();
+     // return  jsonResponse.map((e) => Partners.fromJson(e)).toList();
+        // return partners;
     }else{
       return [];
     }

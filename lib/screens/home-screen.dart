@@ -43,9 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     CarsGetxController.to.getCars();
-    WishlistGetxController controller = Get.put(WishlistGetxController());
-    // selectNew ? CarsGetxController.to.indexOldCars("1") : CarsGetxController.to.indexCars();
+    // WishlistGetxController controller = Get.put(WishlistGetxController());
+
   }
+
 
   @override
   Widget build(BuildContext context) {

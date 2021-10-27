@@ -67,220 +67,223 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
         color: Colors.black,
       ),
       ),
-      body : ListView(
-        padding: EdgeInsetsDirectional.only(
-          start: SizeConfig.scaleWidth(28),
-          end: SizeConfig.scaleWidth(28),
-        ),
-        children: [
-          TextApp(text:  "تأكيد الحساب", fontSize: 30, fontColor: Colors.black, fontWeight: FontWeight.w500,),
-          SizedBox(height: SizeConfig.scaleHeight(17),),
-          TextApp(text: "تم ارسال كود الى الرقم ${widget.mobile}", height: 2 ,fontSize: 14, fontColor: AppColor.SUB_TITLE_PAGEVIEW, fontWeight: FontWeight.w500,),
-          SizedBox(height: SizeConfig.scaleHeight(94),),
-
-          SizedBox(
-            height: SizeConfig.scaleHeight(65),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: TextField(
-                      textDirection: TextDirection.rtl,
-                      autofocus: true,
-                      keyboardType: TextInputType.number,
-                      controller: _firstCodeTextEditingController,
-                      focusNode: _firstFocusNode,
-                      minLines: null,
-                      maxLines: null,
-                      maxLength: 1,
-                      onChanged: (String text){
-                        if(text.length == 1){
-                          _secondFocusNode.requestFocus();
-                        }
-                      },
-                      cursorColor: AppColor.INDICATOR_PAGEVIEW,
-                      style: TextStyle(
-                        fontFamily: "Circular Std",
-                        fontWeight: FontWeight.w500,
-                        fontSize: SizeConfig.scaleTextFont(23),
-                        color: Colors.black
-                      ),
-
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
-                          hintText: "-",
-                          contentPadding: EdgeInsetsDirectional.only(
-                            start: SizeConfig.scaleWidth(8),
-                            end: SizeConfig.scaleWidth(8),
-                            top: SizeConfig.scaleHeight(3),
-                            bottom: SizeConfig.scaleHeight(3),
-                          ),
-                          filled: true,
-                          counterText: "",
-                          enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        )
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: TextField(
-                      textDirection: TextDirection.rtl,
-                      keyboardType: TextInputType.number,
-                      controller: _secondCodeTextEditingController,
-                      focusNode: _secondFocusNode,
-                      minLines: null,
-                      maxLines: null,
-                      onChanged: (String text){
-                        if(text.length == 1){
-                          _thirdFocusNode.requestFocus();
-                        }
-                      },
-                      maxLength: 1,
-                      cursorColor: AppColor.INDICATOR_PAGEVIEW,
-                      style: TextStyle(
-                          fontFamily: "Circular Std",
-                          fontWeight: FontWeight.w500,
-                          fontSize: SizeConfig.scaleTextFont(23),
-                          color: Colors.black
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
-                          hintText: "-",
-                          contentPadding: EdgeInsetsDirectional.only(
-                            start: SizeConfig.scaleWidth(8),
-                            end: SizeConfig.scaleWidth(8),
-                            top: SizeConfig.scaleHeight(3),
-                            bottom: SizeConfig.scaleHeight(3),
-                          ),
-                          filled: true,
-                          counterText: "",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          )
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: TextField(
-                      textDirection: TextDirection.rtl,
-                      keyboardType: TextInputType.number,
-                      controller: _thirdCodeTextEditingController,
-                      focusNode: _thirdFocusNode,
-                      minLines: null,
-                      maxLines: null,
-                      maxLength: 1,
-                      onChanged: (String text){
-                        if(text.length == 1){
-                          _fourthFocusNode.requestFocus();
-                        }
-                      },
-                      cursorColor: AppColor.INDICATOR_PAGEVIEW,
-                      style: TextStyle(
-                          fontFamily: "Circular Std",
-                          fontWeight: FontWeight.w500,
-                          fontSize: SizeConfig.scaleTextFont(23),
-                          color: Colors.black
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
-                          hintText: "-",
-                          contentPadding: EdgeInsetsDirectional.only(
-                            start: SizeConfig.scaleWidth(8),
-                            end: SizeConfig.scaleWidth(8),
-                            top: SizeConfig.scaleHeight(3),
-                            bottom: SizeConfig.scaleHeight(3),
-                          ),
-                          filled: true,
-                          counterText: "",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          )
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: TextField(
-                      textDirection: TextDirection.rtl,
-                      keyboardType: TextInputType.number,
-                      controller: _fourthCodeTextEditingController,
-                      focusNode: _fourthFocusNode,
-                      minLines: null,
-                      maxLines: null,
-                      maxLength: 1,
-                      cursorColor: AppColor.INDICATOR_PAGEVIEW,
-                      style: TextStyle(
-                          fontFamily: "Circular Std",
-                          fontWeight: FontWeight.w500,
-                          fontSize: SizeConfig.scaleTextFont(23),
-                          color: Colors.black
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
-                          hintText: "-",
-                          contentPadding: EdgeInsetsDirectional.only(
-                            start: SizeConfig.scaleWidth(8),
-                            end: SizeConfig.scaleWidth(8),
-                            top: SizeConfig.scaleHeight(3),
-                            bottom: SizeConfig.scaleHeight(3),
-                          ),
-                          filled: true,
-                          counterText: "",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          )
-                      ),
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
+      body : Directionality(
+        textDirection: TextDirection.ltr,
+        child: ListView(
+          padding: EdgeInsetsDirectional.only(
+            start: SizeConfig.scaleWidth(28),
+            end: SizeConfig.scaleWidth(28),
           ),
-          SizedBox(height: SizeConfig.scaleHeight(27),),
+          children: [
+            TextApp(text:  "تأكيد الحساب", fontSize: 30, fontColor: Colors.black, fontWeight: FontWeight.w500,),
+            SizedBox(height: SizeConfig.scaleHeight(17),),
+            TextApp(text: "تم ارسال كود الى الرقم ${widget.mobile}", height: 2 ,fontSize: 14, fontColor: AppColor.SUB_TITLE_PAGEVIEW, fontWeight: FontWeight.w500,),
+            SizedBox(height: SizeConfig.scaleHeight(94),),
 
-          ButtonApp(text: "التالي", width: double.infinity, height: 59, onPressed: (){ performVerify(); }, ),
-          SizedBox(height: SizeConfig.scaleHeight(21),),
+            SizedBox(
+              height: SizeConfig.scaleHeight(65),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: TextField(
+                        textDirection: TextDirection.rtl,
+                        autofocus: true,
+                        keyboardType: TextInputType.number,
+                        controller: _firstCodeTextEditingController,
+                        focusNode: _firstFocusNode,
+                        minLines: null,
+                        maxLines: null,
+                        maxLength: 1,
+                        onChanged: (String text){
+                          if(text.length == 1){
+                            _secondFocusNode.requestFocus();
+                          }
+                        },
+                        cursorColor: AppColor.INDICATOR_PAGEVIEW,
+                        style: TextStyle(
+                          fontFamily: "Circular Std",
+                          fontWeight: FontWeight.w500,
+                          fontSize: SizeConfig.scaleTextFont(23),
+                          color: Colors.black
+                        ),
 
-        ],
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
+                            hintText: "-",
+                            contentPadding: EdgeInsetsDirectional.only(
+                              start: SizeConfig.scaleWidth(8),
+                              end: SizeConfig.scaleWidth(8),
+                              top: SizeConfig.scaleHeight(3),
+                              bottom: SizeConfig.scaleHeight(3),
+                            ),
+                            filled: true,
+                            counterText: "",
+                            enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          )
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: TextField(
+                        textDirection: TextDirection.rtl,
+                        keyboardType: TextInputType.number,
+                        controller: _secondCodeTextEditingController,
+                        focusNode: _secondFocusNode,
+                        minLines: null,
+                        maxLines: null,
+                        onChanged: (String text){
+                          if(text.length == 1){
+                            _thirdFocusNode.requestFocus();
+                          }
+                        },
+                        maxLength: 1,
+                        cursorColor: AppColor.INDICATOR_PAGEVIEW,
+                        style: TextStyle(
+                            fontFamily: "Circular Std",
+                            fontWeight: FontWeight.w500,
+                            fontSize: SizeConfig.scaleTextFont(23),
+                            color: Colors.black
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
+                            hintText: "-",
+                            contentPadding: EdgeInsetsDirectional.only(
+                              start: SizeConfig.scaleWidth(8),
+                              end: SizeConfig.scaleWidth(8),
+                              top: SizeConfig.scaleHeight(3),
+                              bottom: SizeConfig.scaleHeight(3),
+                            ),
+                            filled: true,
+                            counterText: "",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            )
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: TextField(
+                        textDirection: TextDirection.rtl,
+                        keyboardType: TextInputType.number,
+                        controller: _thirdCodeTextEditingController,
+                        focusNode: _thirdFocusNode,
+                        minLines: null,
+                        maxLines: null,
+                        maxLength: 1,
+                        onChanged: (String text){
+                          if(text.length == 1){
+                            _fourthFocusNode.requestFocus();
+                          }
+                        },
+                        cursorColor: AppColor.INDICATOR_PAGEVIEW,
+                        style: TextStyle(
+                            fontFamily: "Circular Std",
+                            fontWeight: FontWeight.w500,
+                            fontSize: SizeConfig.scaleTextFont(23),
+                            color: Colors.black
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
+                            hintText: "-",
+                            contentPadding: EdgeInsetsDirectional.only(
+                              start: SizeConfig.scaleWidth(8),
+                              end: SizeConfig.scaleWidth(8),
+                              top: SizeConfig.scaleHeight(3),
+                              bottom: SizeConfig.scaleHeight(3),
+                            ),
+                            filled: true,
+                            counterText: "",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            )
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: TextField(
+                        textDirection: TextDirection.rtl,
+                        keyboardType: TextInputType.number,
+                        controller: _fourthCodeTextEditingController,
+                        focusNode: _fourthFocusNode,
+                        minLines: null,
+                        maxLines: null,
+                        maxLength: 1,
+                        cursorColor: AppColor.INDICATOR_PAGEVIEW,
+                        style: TextStyle(
+                            fontFamily: "Circular Std",
+                            fontWeight: FontWeight.w500,
+                            fontSize: SizeConfig.scaleTextFont(23),
+                            color: Colors.black
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            fillColor: AppColor.TEXT_SIGNUP.withOpacity(0.1),
+                            hintText: "-",
+                            contentPadding: EdgeInsetsDirectional.only(
+                              start: SizeConfig.scaleWidth(8),
+                              end: SizeConfig.scaleWidth(8),
+                              top: SizeConfig.scaleHeight(3),
+                              bottom: SizeConfig.scaleHeight(3),
+                            ),
+                            filled: true,
+                            counterText: "",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            )
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+            SizedBox(height: SizeConfig.scaleHeight(27),),
+
+            ButtonApp(text: "التالي", width: double.infinity, height: 59, onPressed: (){ performVerify(); }, ),
+            SizedBox(height: SizeConfig.scaleHeight(21),),
+
+          ],
+        ),
       ),
     );
   }

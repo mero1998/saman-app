@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saman_project/contorller/user_api_controller.dart';
@@ -189,9 +190,26 @@ late  TextEditingController _confNewPasswordTextEditingController;
               left: SizeConfig.scaleWidth(22),
               child: Stack(
                   children:[
-                    CircleAvatar(
-                      radius: SizeConfig.scaleHeight(50),
-                      backgroundImage: NetworkImage(UserGetxController.to.user.first!.image!),
+                    CachedNetworkImage(
+                      imageUrl: UserGetxController.to.user.first!.image ?? "",
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: SizeConfig.scaleWidth(95),
+                        height: SizeConfig.scaleHeight(95),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            )
+                        ),
+                      ),
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            color: Colors.deepOrangeAccent,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.person, size: SizeConfig.scaleWidth(95), color: Colors.white,)),
                     ),
                     Positioned(
                       bottom: SizeConfig.scaleHeight(15),

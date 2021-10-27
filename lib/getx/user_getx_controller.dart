@@ -32,8 +32,9 @@ class UserGetxController extends GetxController{
   Future<void> updateUserDetails({required String email,required String firstName,required String lastName,required String mobile,required String countryCode,required String countryName,required  String? path}) async{
 
     UserDetails? userDetails  = await userApiController.updateProfileData(email: email, firstName: firstName, lastName: lastName, mobile: mobile, contryCode: countryCode, countryName: countryName, path: path ?? "");
-    user.add(userDetails);
-    // user[0] = await userApiController.userDetails();
+    if(userDetails != null){
+      user.add(userDetails);
+    }
     print("We are here User GETX update user data");
 
   }

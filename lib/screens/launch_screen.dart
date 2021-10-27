@@ -34,6 +34,7 @@ UserGetxController userControllerGetx = Get.put(UserGetxController());
     PartnersControllerGetx partnersGetxController = Get.put(PartnersControllerGetx());
     ReviwesControllerGetx reviwesGetxController = Get.put(ReviwesControllerGetx());
 
+
     Future.delayed(Duration(seconds: 3), () {
       String route = UserPreferences().isLoggedIn ? "/main_screen" : "/on-boarding";
       Navigator.pushReplacementNamed(context, route);

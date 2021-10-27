@@ -22,6 +22,7 @@ class UserPreferences {
     await _sharedPreferences.setString('mobile', user.user!.mobile);
     await _sharedPreferences.setString('email', user.user!.email);
     await _sharedPreferences.setString('country_code', user.user!.contryCode);
+    await _sharedPreferences.setString('country_name', user.user!.countryName);
     // await _sharedPreferences.setString('apiKey', user.token!.substring(39));
     await _sharedPreferences.setString('token', user.token);
 
@@ -42,6 +43,11 @@ class UserPreferences {
 
 
   bool get isLoggedIn => _sharedPreferences.getBool('logged_in') ?? false;
+
+  String get mobile => _sharedPreferences.getString("mobile") ?? "";
+
+  String get countryCode => _sharedPreferences.getString("country_code") ?? "";
+  String get countryName => _sharedPreferences.getString("country_name") ?? "";
 
   Future<bool> logout() async {
     return await _sharedPreferences.clear();

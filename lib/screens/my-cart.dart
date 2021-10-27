@@ -186,7 +186,7 @@ class _MyCartState extends State<MyCart> {
                       RichText(
                         text: TextSpan(
                           //create varibale to change price
-                            text: '50000 ',
+                            text: CartGetxController.to.amount.value.toString(),
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: SizeConfig.scaleTextFont(16),

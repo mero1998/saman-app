@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:image_picker/image_picker.dart';
@@ -307,13 +308,43 @@ class _AccountInfoState extends State<AccountInfo> {
                 left: SizeConfig.scaleWidth(22),
                 child: Stack(
                     children:[
-                      InkWell(
-                        onTap: () => pickImage(),
-                        child: CircleAvatar(
-                          radius: SizeConfig.scaleHeight(50),
-                          backgroundImage: _pickedFile != null ?  FileImage(File(_pickedFile!.path)) : FileImage(File(UserGetxController.to.user.first!.image!)),
-                          // child: Image.network(UserGetxController.to.user.first!.image!),
-                          foregroundImage: NetworkImage(UserGetxController.to.user.first!.image!),
+                      // InkWell(
+                      //   onTap: () => pickImage(),
+                      //   child: CircleAvatar(
+                      //     radius: SizeConfig.scaleHeight(50),
+                      //     backgroundImage: _pickedFile != null ?  FileImage(File(_pickedFile!.path)) : FileImage(File(UserGetxController.to.user.first!.image!)),
+                      //     // child: Image.network(UserGetxController.to.user.first!.image!),
+                      //     foregroundImage: NetworkImage(UserGetxController.to.user.first!.image ?? "http://via.placeholder.com/350x150"),
+                      //    // foregroundImage:  CachedNetworkImage(
+                      //    //     imageUrl: UserGetxController.to.user.first!.image!,
+                      //    //     placeholder: (context, url) => CircularProgressIndicator(),
+                      //    //     errorWidget: (context, url, error) => Icon(Icons.error),
+                      //   ),
+                      // ),
+                      Visibility(
+                        visible: _pickedFile == null,
+                    replacement : CircleAvatar(
+                              radius: SizeConfig.scaleHeight(50),
+                              backgroundImage: _pickedFile != null ? FileImage(File(_pickedFile!.path)) : FileImage(File("sd"))
+                        ),
+                       child : InkWell(
+                          onTap: (){
+                            pickImage();
+                          },
+                         child: CachedNetworkImage(
+                           imageUrl: UserGetxController.to.user.first!.image ?? "",
+                           imageBuilder: (context, imageProvider) => Container(
+                             width: SizeConfig.scaleWidth(95),
+                             height: SizeConfig.scaleHeight(95),
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                   image: imageProvider, fit: BoxFit.cover),
+                             ),
+                           ),
+                           placeholder: (context, url) => CircularProgressIndicator(),
+                           errorWidget: (context, url, error) => Icon(Icons.error),
+                         ),
                         ),
                       ),
                       Positioned(

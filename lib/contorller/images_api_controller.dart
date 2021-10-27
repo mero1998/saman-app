@@ -17,7 +17,7 @@ class ImageApiController with Helper{
     var response = await request.send();
     response.stream.transform(utf8.decoder).listen((event) {
       print(event);
-      showSnackBar(context, jsonDecode(event)["message"]);
+      // showSnackBar(context, jsonDecode(event)["error"]);
     });
 
     print(response.statusCode);

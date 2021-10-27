@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:saman_project/getx/blog_controller_getx.dart';
 import 'package:saman_project/models/blog.dart';
+import 'package:saman_project/screens/blog-details.dart';
 import 'package:saman_project/utils/constans.dart';
 import 'package:saman_project/utils/size-config.dart';
 
@@ -44,7 +45,7 @@ class Blogs extends StatelessWidget {
               return  BlogItem(
                 blog: blog,
                 onTap: (){
-                Navigator.pushNamed(context, '/blog-details');
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> BlogDetails(blog: blog)));
               },);
 
             });

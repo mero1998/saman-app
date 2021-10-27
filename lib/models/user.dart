@@ -108,7 +108,7 @@ late  String countryName;
     mobile = json['mobile'];
     role = json['role'];
     otp = json['otp'];
-    image = json['image'];
+    image =  json['image'];
     status = json['status'];
     isVerified = json['is_verified'];
     loggedIn = json['logged_in'];

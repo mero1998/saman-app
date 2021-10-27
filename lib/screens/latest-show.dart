@@ -1,4 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:saman_project/getx/cars_controller_getx.dart';
+import 'package:saman_project/getx/cart_getx_controller.dart';
+import 'package:saman_project/models/cars.dart';
 import 'package:saman_project/utils/constans.dart';
 import 'package:saman_project/utils/size-config.dart';
 
@@ -41,12 +47,19 @@ class LatestShow extends StatelessWidget {
                 Container(
                   height:MediaQuery.of(context).size.height *1,
                   width: SizeConfig.scaleWidth(256),
-                  child: ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (BuildContext context, int index) {
-                        // Container have product
-                        return ProductWidgetTh();
-                      }),
+                  child: GetX<CarsGetxController>(
+                    builder: (CarsGetxController controller) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          itemCount: controller.cars.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            // Container have product
+                            return controller.cars.length != 0 ? ProductWidgetTh(cars: controller.cars[index],)
+                                : Center(child: Container(child: Text("لا يوجد سيارات هنا"),));
+                          });
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: SizeConfig.scaleHeight(33),
@@ -62,6 +75,12 @@ class LatestShow extends StatelessWidget {
 }
 
 class ProductWidgetTh extends StatefulWidget {
+
+  Cars cars;
+
+
+  ProductWidgetTh({required this.cars});
+
   @override
   _ProductWidgetThState createState() => _ProductWidgetThState();
 }
@@ -76,12 +95,39 @@ class _ProductWidgetThState extends State<ProductWidgetTh> {
       width: SizeConfig.scaleWidth(256),
       margin: EdgeInsets.only(bottom: SizeConfig.scaleWidth(45)),
       decoration: BoxDecoration(
-
         borderRadius: BorderRadius.circular(SizeConfig.scaleHeight(26)),
         border: Border.all(color: Color(0XFFF45F5B)),
       ),
       child: Stack(
         children: [
+          // CachedNetworkImage(
+          //   imageUrl: widget.cars.imageUrl,
+          //   imageBuilder: (context, imageProvider) => Container(
+          //       // width: SizeConfig.scaleWidth(256),
+          //       // height: SizeConfig.scaleHeight(171),
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.only(
+          //               topRight: Radius.circular(
+          //                 SizeConfig.scaleHeight(26),
+          //               ),
+          //               topLeft: Radius.circular(
+          //                 SizeConfig.scaleHeight(26),
+          //               ),
+          //             ),
+          //         image: DecorationImage(
+          //           image: imageProvider,
+          //           fit: BoxFit.cover,
+          //         )
+          //     ),
+          //   ),
+          //   placeholder: (context, url) => CircularProgressIndicator(),
+          //   errorWidget: (context, url, error) => Container(
+          //       decoration: BoxDecoration(
+          //         color: Colors.deepOrangeAccent,
+          //         shape: BoxShape.circle,
+          //       ),
+          //       child: Icon(Icons.person, size: SizeConfig.scaleWidth(95), color: Colors.white,)),
+          // ),
           Container(
             width: SizeConfig.scaleWidth(256),
             height: SizeConfig.scaleHeight(171),
@@ -96,7 +142,7 @@ class _ProductWidgetThState extends State<ProductWidgetTh> {
               ),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage('images/carr.jpg'),
+                image: NetworkImage(widget.cars.imageUrl),
               ),
             ),
           ),

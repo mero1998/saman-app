@@ -22,8 +22,9 @@ class ReviwesControllerApi{
       var jsonResponse =  jsonDecode(response.body)['success'];
 
       print("Response :  ${jsonResponse}");
-      List<Reviews>  reviews =  jsonResponse.map((e) => Reviews.fromJson(e)).toList();
-        return reviews;
+      // List<Reviews>  reviews =  jsonResponse.map((e) => Reviews.fromJson(e)).toList();
+      //   return reviews;
+      return (jsonResponse as List).map((e) => Reviews.fromJson(e)).toList();
     }else{
       return [];
     }

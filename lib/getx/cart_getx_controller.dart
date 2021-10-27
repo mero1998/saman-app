@@ -16,6 +16,7 @@ class CartGetxController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     indexCart();
+    getCountCart();
     // amount.value = cart.map((element) => element.).reduce((value, element) => value + element);
     super.onInit();
   }
@@ -44,4 +45,11 @@ class CartGetxController extends GetxController {
    }
      return deleted;
    }
+
+  Future<void> getCountCart() async{
+
+    amount.value = await cartController.getCountCart();
+
   }
+  }
+

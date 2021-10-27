@@ -74,4 +74,21 @@ class CartController{
       return false;
     }
   }
+
+  Future<int> getCountCart() async{
+    var url = Uri.parse(ApiSettings.GETCART);
+    var response = await http.get(url,
+        headers: {
+          HttpHeaders.authorizationHeader : UserPreferences().getToken(),
+        });
+
+    print("Cart : ${response.statusCode}");
+    if(response.statusCode == 200){
+      var jsonResponse = jsonDecode(response.body)['data'];
+      return jsonResponse;
+    }else{
+      return 0;
+    }
+  }
+
 }

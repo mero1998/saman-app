@@ -2,7 +2,9 @@
     package="com.example.saman_project">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-   <application
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
         android:label="saman_project"
         android:icon="@mipmap/ic_launcher"
        android:usesCleartextTraffic="true"
