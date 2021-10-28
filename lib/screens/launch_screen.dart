@@ -23,20 +23,10 @@ class _LaunchScreenState extends State<LaunchScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  BrandControllerGetx controllerGetx = Get.put(BrandControllerGetx());
-  HomeGetxController controller = Get.put(HomeGetxController());
-  CarsGetxController carsController = Get.put(CarsGetxController());
-BlogControllerGetx blogControllerGetx = Get.put(BlogControllerGetx());
-UserGetxController userControllerGetx = Get.put(UserGetxController());
-    CarDetailsGetxController carDetailsGetxController = Get.put(CarDetailsGetxController());
-    PlanGetxController plansGetxController = Get.put(PlanGetxController());
-    CartGetxController cartGetxController = Get.put(CartGetxController());
-    PartnersControllerGetx partnersGetxController = Get.put(PartnersControllerGetx());
-    ReviwesControllerGetx reviwesGetxController = Get.put(ReviwesControllerGetx());
 
 
     Future.delayed(Duration(seconds: 3), () {
-      String route = UserPreferences().isLoggedIn ? "/main_screen" : "/on-boarding";
+      String route = UserPreferences().isLoggedIn ? "/bottom-nav" : "/on-boarding";
       Navigator.pushReplacementNamed(context, route);
     });
   }

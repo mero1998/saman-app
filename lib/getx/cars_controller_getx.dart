@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saman_project/contorller/car_controller_api.dart';
 import 'package:saman_project/models/cars.dart';
@@ -24,7 +25,6 @@ class CarsGetxController extends GetxController{
   void onInit() async {
     super.onInit();
     await indexCars();
-    getCars();
     showList();
   }
 
@@ -38,13 +38,16 @@ class CarsGetxController extends GetxController{
   void getCarsWithBrand({required String brandId}){
     carsWithBrand.value = cars.where((e) => e.brandId == brandId).toList();
   }
-  void getCars(){
+  void getCars({required String typeCar, required String model,required String color,required bool isOld,/* required String fromPrice,required String toPrice */}){
     if(selectNew.value){
      newCars.value = cars.where((e) => e.isOld == "0").toList();
     }else if(selectOld.value){
      oldCars.value = cars.where((e) => e.isOld == "1").toList();
     }else if(selectFilter.value){
+      //e.price == RangeValues(double.parse(fromPrice),double.parse(toPrice)),
+     // carsFilter.value =  cars.where((e) => e.color == color || e.modelYear == model || e.isOld == isOld).toList();
      carsFilter.value =  cars.where((e) => e.color == "black").toList();
+
     }else{
        showCars.value = cars;
     }

@@ -25,7 +25,7 @@ class Car {
  late String? name;
  late String? carNumber;
  late String? isOld;
- late String? price;
+ late String price;
  late String? description;
  late String? address;
  late String? brandId;

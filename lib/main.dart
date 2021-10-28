@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:saman_project/preference/user_prefernce.dart';
 import 'package:saman_project/screens/about-saman.dart';
@@ -29,6 +30,7 @@ import 'package:saman_project/screens/subscription-plans.dart';
 import 'package:saman_project/storage/db_provider.dart';
 import 'package:saman_project/widgets/product-widgt.dart';
 
+import 'getx/cart_getx_controller.dart';
 import 'main_screen.dart';
 
 
@@ -48,6 +50,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -64,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         '/on-boarding' : (context) => OnBoarding(),
         '/register_screen' : (context) => RegisterScreen(),
         '/login_screen' : (context) => LoginScreen(),
-        '/main_screen' : (context) => MainScreen(),
+        // '/main_screen' : (context) => MainScreen(),
         '/my-info' : (context) => MyInformation(),
         '/bottom-nav' : (context) => BottomNavBar(),
         '/my-cart' : (context) => MyCart(),

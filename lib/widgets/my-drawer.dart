@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saman_project/contorller/user_api_controller.dart';
+import 'package:saman_project/getx/user_getx_controller.dart';
 import 'package:saman_project/utils/size-config.dart';
 import 'package:saman_project/utils/size-config.dart';
 
@@ -16,13 +18,31 @@ class MyDrawer extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('images/hhr.jpg'),
+                    CachedNetworkImage(
+                      imageUrl: UserGetxController.to.user.first!.image ?? "",
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: SizeConfig.scaleWidth(50),
+                        height: SizeConfig.scaleHeight(50),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            )
+                        ),
+                      ),
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            color: Colors.deepOrangeAccent,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.person, size: SizeConfig.scaleWidth(95), color: Colors.white,)),
                     ),
                     SizedBox(
                       width: SizeConfig.scaleWidth(20),
                     ),
-                    Text('Mohammed Jebreel',
+                    Text(UserGetxController.to.user.first!.firstName + UserGetxController.to.user.first!.lastName,
                       style: TextStyle(
                         fontFamily: 'Cairo',
                         fontSize: SizeConfig.scaleTextFont(20),

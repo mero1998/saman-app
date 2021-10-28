@@ -7,10 +7,11 @@ import 'package:saman_project/models/cars.dart';
 import 'package:http/http.dart' as http;
 import 'package:saman_project/preference/user_prefernce.dart';
 class CarsControllerApi{
-
+bool isExeption = false;
   Future<List<Cars>> indexCars() async{
     var url = Uri.parse(ApiSettings.CARS);
     var response = await http.get(url);
+
     if(response.statusCode == 200){
       var jsonResponse = jsonDecode(response.body)['data']['data'] as List;
 
@@ -19,6 +20,7 @@ class CarsControllerApi{
       return cars;
     }
 
+    isExeption = true;
     return [];
   }
   Future<List<Cars>> indexOldCars() async{

@@ -337,13 +337,20 @@ class _AccountInfoState extends State<AccountInfo> {
                              width: SizeConfig.scaleWidth(95),
                              height: SizeConfig.scaleHeight(95),
                              decoration: BoxDecoration(
-                               shape: BoxShape.circle,
-                               image: DecorationImage(
-                                   image: imageProvider, fit: BoxFit.cover),
+                                 shape: BoxShape.circle,
+                                 image: DecorationImage(
+                                   image: imageProvider,
+                                   fit: BoxFit.cover,
+                                 )
                              ),
                            ),
                            placeholder: (context, url) => CircularProgressIndicator(),
-                           errorWidget: (context, url, error) => Icon(Icons.error),
+                           errorWidget: (context, url, error) => Container(
+                               decoration: BoxDecoration(
+                                 color: Colors.deepOrangeAccent,
+                                 shape: BoxShape.circle,
+                               ),
+                               child: Icon(Icons.person, size: SizeConfig.scaleWidth(95), color: Colors.white,)),
                          ),
                         ),
                       ),

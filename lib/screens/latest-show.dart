@@ -181,14 +181,14 @@ class _ProductWidgetThState extends State<ProductWidgetTh> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'سيارة حديثة',
+                        widget.cars.name,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: SizeConfig.scaleTextFont(16),
                             fontFamily: 'Cairo'),
                       ),
                       Text(
-                        '5000 ريال',
+                        '${widget.cars.price} ريال',
                         style: TextStyle(
                             color: kPrimaryColor,
                             fontSize: SizeConfig.scaleTextFont(16),
@@ -206,7 +206,7 @@ class _ProductWidgetThState extends State<ProductWidgetTh> {
                             size: SizeConfig.scaleHeight(17.22),
                           ),
                           Text(
-                            '32012',
+                            widget.cars.mileage.toString(),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: SizeConfig.scaleTextFont(16),
@@ -220,7 +220,7 @@ class _ProductWidgetThState extends State<ProductWidgetTh> {
                               color: kPrimaryColor,
                               size: SizeConfig.scaleHeight(17.22)),
                           Text(
-                            'Hybrid',
+                              widget.cars.fuelType,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: SizeConfig.scaleTextFont(16),

@@ -68,7 +68,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
       ),
       ),
       body : Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirection.rtl,
         child: ListView(
           padding: EdgeInsetsDirectional.only(
             start: SizeConfig.scaleWidth(28),
@@ -315,16 +315,13 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
     if(user != null){
       UserPreferences().save(user);
       print(user);
-      Navigator.pushNamedAndRemoveUntil(context, "/main_screen", (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, "/bottom-nav", (route) => false);
     }else{
       return null;
     }
   }
 
   String getCode(){
-    return _fourthCodeTextEditingController.text+
-        _thirdCodeTextEditingController.text+
-        _secondCodeTextEditingController.text+
-        _firstCodeTextEditingController.text;
+    return _firstCodeTextEditingController.text + _secondCodeTextEditingController.text + _thirdCodeTextEditingController.text + _fourthCodeTextEditingController.text;
   }
 }

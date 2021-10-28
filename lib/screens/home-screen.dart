@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 import 'package:saman_project/contorller/car_controller_api.dart';
 import 'package:saman_project/getx/blog_controller_getx.dart';
 import 'package:saman_project/getx/brand_controller_getx.dart';
+import 'package:saman_project/getx/car_details_getx_controller.dart';
 import 'package:saman_project/getx/cars_controller_getx.dart';
 import 'package:saman_project/getx/cart_getx_controller.dart';
 import 'package:saman_project/getx/home_controller_getx.dart';
 import 'package:saman_project/getx/partners_controller_getx.dart';
 import 'package:saman_project/getx/reviwes_controller_getx.dart';
+import 'package:saman_project/getx/user_getx_controller.dart';
 import 'package:saman_project/getx/wishlist_getx_controller.dart';
 import 'package:saman_project/models/blog.dart';
 import 'package:saman_project/models/cars.dart';
@@ -30,7 +32,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   RangeValues _currentRangeValues = const RangeValues(40, 80);
-
+  TextEditingController typeCar = TextEditingController();
+  TextEditingController model = TextEditingController();
+  TextEditingController carColor = TextEditingController();
+  RxBool isOld = false.obs;
   // bool selectNew = true;
   // bool selectOld = false;
   // bool filter = false;
@@ -42,364 +47,415 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    CarsGetxController.to.getCars();
     // WishlistGetxController controller = Get.put(WishlistGetxController());
+    BrandControllerGetx controllerGetx = Get.put(BrandControllerGetx());
+    // HomeGetxController controller = Get.put(HomeGetxController());
+    CarsGetxController carsController = Get.put(CarsGetxController());
+    BlogControllerGetx blogControllerGetx = Get.put(BlogControllerGetx());
+    UserGetxController userControllerGetx = Get.put(UserGetxController());
+    PartnersControllerGetx partnersGetxController = Get.put(PartnersControllerGetx());
+    ReviwesControllerGetx reviwesGetxController = Get.put(ReviwesControllerGetx());
+    CarDetailsGetxController carDetailsGetxController = Get.put(CarDetailsGetxController());
+    CartGetxController cartGetxController = Get.put(CartGetxController());
+
 
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: SizeConfig.scaleHeight(336),
-            child: Stack(
-              children: [
-                Container(
-                  height: SizeConfig.scaleHeight(209),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                          'images/backgro.png',
-                        ),
-                        fit: BoxFit.cover),
-                  ),
-                ),
-                Positioned(
-                  top: SizeConfig.scaleHeight(35),
-                  right: SizeConfig.scaleWidth(45),
-                  left: SizeConfig.scaleWidth(45),
-                  child: Container(
-                    height: SizeConfig.scaleHeight(285),
-                    width: SizeConfig.scaleWidth(285),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          SizeConfig.scaleHeight(20),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0XD9FF8D00), Color(0XD9F45F5B)],
-                        )),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: SizeConfig.scaleWidth(33.5),
-                        left: SizeConfig.scaleWidth(33.5),
-                        top: SizeConfig.scaleHeight(19),
-                        bottom: SizeConfig.scaleHeight(17),
+    CarsGetxController.to.getCars(typeCar: typeCar.text , color: carColor.text, model: model.text, isOld: isOld.value);
+
+    return  Scaffold(
+      appBar: AppBar(
+          title: Text(
+            "المتجر",
+            style: TextStyle(color: Colors.black,fontSize: SizeConfig.scaleTextFont(20) ,fontFamily: 'Cairo'),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: Builder(
+            builder: (context) => Container(
+              height: SizeConfig.scaleHeight(20),
+              width: SizeConfig.scaleWidth(20),
+              margin: EdgeInsets.symmetric(
+                horizontal: SizeConfig.scaleWidth(10),
+                vertical: SizeConfig.scaleHeight(10),
+              ),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kPrimaryColor,
+              ),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                icon: Icon(Icons.menu,
+                    color: Colors.white, size: SizeConfig.scaleHeight(20)),
+              ),
+            ),
+          )),
+      drawer: MyDrawer(),
+      body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: SizeConfig.scaleHeight(336),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: SizeConfig.scaleHeight(209),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                              'images/backgro.png',
+                            ),
+                            fit: BoxFit.cover),
                       ),
+                    ),
+                    Positioned(
+                      top: SizeConfig.scaleHeight(35),
+                      right: SizeConfig.scaleWidth(45),
+                      left: SizeConfig.scaleWidth(45),
                       child: Container(
-                        child: Column(
-                          children: [
-                            MainTetField(
-                              titleText: 'نوع السيارة',
+                        height: SizeConfig.scaleHeight(285),
+                        width: SizeConfig.scaleWidth(285),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              SizeConfig.scaleHeight(20),
                             ),
-                            MainTetField(
-                              titleText: 'الموديل',
-                            ),
-                            MainTetField(
-                              titleText: 'اللون',
-                            ),
-                            NewAndUsedButtons(),
-                            SizedBox(
-                              height: SizeConfig.scaleHeight(14),
-                            ),
-                            Container(
-                              height: SizeConfig.scaleHeight(26),
-                              child: SliderTheme(
-                                data: SliderTheme.of(context).copyWith(
-                                  activeTrackColor: Color(0XFF070908),
-                                  inactiveTickMarkColor: Colors.white,
-                                  thumbShape: RoundSliderThumbShape(
-                                      enabledThumbRadius: 13.0),
-                                  thumbColor: Colors.white,
-                                  overlayShape: RoundSliderOverlayShape(
-                                      overlayRadius: 20),
-                                  overlayColor: Color(0X29EB1555),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0XD9FF8D00), Color(0XD9F45F5B)],
+                            )),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: SizeConfig.scaleWidth(33.5),
+                            left: SizeConfig.scaleWidth(33.5),
+                            top: SizeConfig.scaleHeight(19),
+                            bottom: SizeConfig.scaleHeight(17),
+                          ),
+                          child: Container(
+                            child: Column(
+                              children: [
+                                MainTetField(
+                                  titleText: 'نوع السيارة',
+                                  textEditingController: typeCar,
                                 ),
-                                child: RangeSlider(
-                                    values: _currentRangeValues,
-                                    min: 0,
-                                    max: 50000,
-                                    divisions: 10,
-                                    labels: RangeLabels(
-                                      _currentRangeValues.start
-                                          .round()
-                                          .toString(),
-                                      _currentRangeValues.end
-                                          .round()
-                                          .toString(),
+                                MainTetField(
+                                  titleText: 'الموديل',
+                                  textEditingController: model,
+                                ),
+                                MainTetField(
+                                  titleText: 'اللون',
+                                  textEditingController: carColor,
+                                ),
+                                NewAndUsedButtons(isOld: isOld,),
+                                SizedBox(
+                                  height: SizeConfig.scaleHeight(14),
+                                ),
+                                Container(
+                                  height: SizeConfig.scaleHeight(26),
+                                  child: SliderTheme(
+                                    data: SliderTheme.of(context).copyWith(
+                                      activeTrackColor: Color(0XFF070908),
+                                      inactiveTickMarkColor: Colors.white,
+                                      thumbShape: RoundSliderThumbShape(
+                                          enabledThumbRadius: 13.0),
+                                      thumbColor: Colors.white,
+                                      overlayShape: RoundSliderOverlayShape(
+                                          overlayRadius: 20),
+                                      overlayColor: Color(0X29EB1555),
                                     ),
-                                    onChanged: (RangeValues values) {
-                                      setState(() {
-                                        _currentRangeValues = values;
-                                      });
-                                    }),
-                              ),
+                                    child: RangeSlider(
+                                        values: _currentRangeValues,
+                                        min: 0,
+                                        max: 50000,
+                                        divisions: 10,
+                                        labels: RangeLabels(
+                                          _currentRangeValues.start
+                                              .round()
+                                              .toString(),
+                                          _currentRangeValues.end
+                                              .round()
+                                              .toString(),
+                                        ),
+                                        onChanged: (RangeValues values) {
+                                          setState(() {
+
+                                            _currentRangeValues = values;
+                                          });
+                                        }),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: SizeConfig.scaleHeight(28.5),
+                                ),
+                                MySButton(
+                                  onTap: () {
+                                    setState(() {
+                                      CarsGetxController.to.changeFilterState(true);
+                                      CarsGetxController.to.getCars(typeCar: typeCar.text , color: carColor.text, model: model.text, isOld: isOld.value);
+                                      //   CarsGetxController().indexFilterCars(
+                                      //       price_from: "500",
+                                      //       price_to: "5000",
+                                      //       color: "white",
+                                      //       model: "2021",
+                                      //       brand_id: "9",
+                                      //       isOld: "0");
+                                    });
+                                  },
+                                  buttonTitle: 'بحث',
+                                  buttonColor: Color(0XFF231F1F),
+                                  buttonHeight: SizeConfig.scaleHeight(27),
+                                  buttonLeftMargin: SizeConfig.scaleWidth(59),
+                                  buttonRightMargin: SizeConfig.scaleWidth(59),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: SizeConfig.scaleHeight(28.5),
-                            ),
-                            MySButton(
-                              onTap: () {
-                                setState(() {
-                                  CarsGetxController.to.changeFilterState(true);
-                                  CarsGetxController.to.getCars();
-                                  //   CarsGetxController().indexFilterCars(
-                                  //       price_from: "500",
-                                  //       price_to: "5000",
-                                  //       color: "white",
-                                  //       model: "2021",
-                                  //       brand_id: "9",
-                                  //       isOld: "0");
-                                });
-                              },
-                              buttonTitle: 'بحث',
-                              buttonColor: Color(0XFF231F1F),
-                              buttonHeight: SizeConfig.scaleHeight(27),
-                              buttonLeftMargin: SizeConfig.scaleWidth(59),
-                              buttonRightMargin: SizeConfig.scaleWidth(59),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: SizeConfig.scaleHeight(20),
-          ),
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.scaleHeight(16)),
-            child: Text(
-              'افضل العلامات التجارية لدينا',
-              style: TextStyle(
-                fontFamily: 'Cairo',
-                fontSize: SizeConfig.scaleTextFont(20),
               ),
-            ),
-          ),
-          BestMarcas(),
-          Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: SizeConfig.scaleWidth(16),
-                vertical: SizeConfig.scaleHeight(26)),
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      CarsGetxController.to.changeNewState(true);
-                      CarsGetxController.to.getCars();
-                    });
-                  },
-                  child: Text(
-                    "جديد",
-                    style: TextStyle(
-                        fontSize: SizeConfig.scaleTextFont(16),
-                        color: CarsGetxController.to.selectNew.value
-                            ? Colors.white
-                            : Colors.black,
-                        fontFamily: "Cairo",
-                        fontWeight: FontWeight.bold),
+              SizedBox(
+                height: SizeConfig.scaleHeight(20),
+              ),
+              Padding(
+                padding: EdgeInsets.all(SizeConfig.scaleHeight(16)),
+                child: Text(
+                  'افضل العلامات التجارية لدينا',
+                  style: TextStyle(
+                    fontFamily: 'Cairo',
+                    fontSize: SizeConfig.scaleTextFont(20),
                   ),
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: Size(
-                        SizeConfig.scaleWidth(96),
-                        SizeConfig.scaleHeight(47),
-                      ),
-                      primary: CarsGetxController.to.selectNew.value
-                          ? kPrimaryColor
-                          : Colors.white,
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              SizeConfig.scaleHeight(5)))),
                 ),
-
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      CarsGetxController.to.changeOldState(true);
-                      CarsGetxController.to.getCars();
-                    });
-                  },
-                  child: Text("مستخدم",
-                      style: TextStyle(
-                          fontSize: SizeConfig.scaleTextFont(16),
-                          color: CarsGetxController.to.selectOld.value
-                              ? Colors.white
-                              : Colors.black,
-                          fontFamily: "Cairo",
-                          fontWeight: FontWeight.bold)),
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: Size(
-                        SizeConfig.scaleWidth(96),
-                        SizeConfig.scaleHeight(47),
+              ),
+              BestMarcas(),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.scaleWidth(16),
+                    vertical: SizeConfig.scaleHeight(26)),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          CarsGetxController.to.changeNewState(true);
+                          CarsGetxController.to.getCars(typeCar: typeCar.text , color: carColor.text, model: model.text, isOld: isOld.value);
+                        });
+                      },
+                      child: Text(
+                        "جديد",
+                        style: TextStyle(
+                            fontSize: SizeConfig.scaleTextFont(16),
+                            color: CarsGetxController.to.selectNew.value
+                                ? Colors.white
+                                : Colors.black,
+                            fontFamily: "Cairo",
+                            fontWeight: FontWeight.bold),
                       ),
-                      primary: CarsGetxController.to.selectOld.value
-                          ? kPrimaryColor
-                          : Colors.white,
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              SizeConfig.scaleHeight(5)))),
-                )
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(
+                            SizeConfig.scaleWidth(96),
+                            SizeConfig.scaleHeight(47),
+                          ),
+                          primary: CarsGetxController.to.selectNew.value
+                              ? kPrimaryColor
+                              : Colors.white,
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  SizeConfig.scaleHeight(5)))),
+                    ),
 
-                // NewOldButtons(
-                //   onTap: () {
-                //     homeController.changeStateButton(true);
-                //     setState(() {
-                //       select = !select;
-                //     });
-                //   },
-                //   isNew:  homeController.newest.value,
-                //   title: Text(
-                //     'جديد',
-                //     style: TextStyle(
-                //         fontFamily: 'Cairo',
-                //         color: Colors.white,
-                //         fontSize: SizeConfig.scaleTextFont(16)),
-                //   ),
-                //   buttonColor: kPrimaryColor,
-                // ),
-                // SizedBox(
-                //   width: SizeConfig.scaleWidth(20),
-                // ),
-                // NewOldButtons(
-                //   onTap: () {
-                //     homeController.changeStateButton(false);
-                //     setState(() {
-                //       select = !select;
-                //     });
-                //   },
-                //   isNew:   homeController.newest.value,
-                //   title: Text(
-                //     'مستخدم',
-                //     style: TextStyle(
-                //         fontFamily: 'Cairo',
-                //         color: Colors.black,
-                //         fontSize: SizeConfig.scaleTextFont(16)),
-                //   ),
-                //   buttonColor: Colors.white,
-                // ),
-              ],
-            ),
-          ),
-          //product listView
-          GetX<CarsGetxController>(
-              builder: (CarsGetxController carsController) {
-            return Container(
-                height: SizeConfig.scaleHeight(285),
-                width: double.infinity,
-                child: ListView.builder(
-                    itemCount: carsController.getListLength(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      // carsController.showList();
-                      return Container(
-                          margin:
-                              EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
-                          child: ProductWidget(
-                            cars:  carsController.showCars[index],
-                          ));
-                    }));
-          }),
-          SizedBox(
-            height: SizeConfig.scaleHeight(33),
-          ),
-          //product listView
-          // Container(
-          //   height: SizeConfig.scaleHeight(285),
-          //   width: double.infinity,
-          //   child: ListView.builder(
-          //       itemCount: 5,
-          //       scrollDirection: Axis.horizontal,
-          //       itemBuilder: (BuildContext context, int index) {
-          //         return Container(
-          //             margin:
-          //             EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
-          //             child: ProductWidget());
-          //       }),
-          // ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          CarsGetxController.to.changeOldState(true);
+                          CarsGetxController.to.getCars(typeCar: typeCar.text , color: carColor.text, model: model.text, isOld: isOld.value);
+                        });
+                      },
+                      child: Text("مستخدم",
+                          style: TextStyle(
+                              fontSize: SizeConfig.scaleTextFont(16),
+                              color: CarsGetxController.to.selectOld.value
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontFamily: "Cairo",
+                              fontWeight: FontWeight.bold)),
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(
+                            SizeConfig.scaleWidth(96),
+                            SizeConfig.scaleHeight(47),
+                          ),
+                          primary: CarsGetxController.to.selectOld.value
+                              ? kPrimaryColor
+                              : Colors.white,
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  SizeConfig.scaleHeight(5)))),
+                    )
 
-          Consultation(),
-
-          Container(
-              margin:
-                  EdgeInsets.symmetric(vertical: SizeConfig.scaleHeight(20)),
-              child: Title(
-                title: 'شركاؤنا',
-              )),
-          Partners(),
-
-          Container(
-            margin: EdgeInsets.only(
-              top: SizeConfig.scaleHeight(20),
-              bottom: SizeConfig.scaleHeight(27),
-            ),
-            child: Title(
-              title: 'تقيمات عملائنا',
-            ),
-          ),
-          //customer Comment
-          GetX<ReviwesControllerGetx>(
-            builder: (ReviwesControllerGetx controller) {
-              return  Container(
-                  margin: EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
-              height: SizeConfig.scaleHeight(194),
-              width: double.infinity,
-              child: ListView.builder(
-              clipBehavior: Clip.none,
-              itemCount: controller.reviews.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-              return CustomersComments(reviews: controller.reviews[index],);
+                    // NewOldButtons(
+                    //   onTap: () {
+                    //     homeController.changeStateButton(true);
+                    //     setState(() {
+                    //       select = !select;
+                    //     });
+                    //   },
+                    //   isNew:  homeController.newest.value,
+                    //   title: Text(
+                    //     'جديد',
+                    //     style: TextStyle(
+                    //         fontFamily: 'Cairo',
+                    //         color: Colors.white,
+                    //         fontSize: SizeConfig.scaleTextFont(16)),
+                    //   ),
+                    //   buttonColor: kPrimaryColor,
+                    // ),
+                    // SizedBox(
+                    //   width: SizeConfig.scaleWidth(20),
+                    // ),
+                    // NewOldButtons(
+                    //   onTap: () {
+                    //     homeController.changeStateButton(false);
+                    //     setState(() {
+                    //       select = !select;
+                    //     });
+                    //   },
+                    //   isNew:   homeController.newest.value,
+                    //   title: Text(
+                    //     'مستخدم',
+                    //     style: TextStyle(
+                    //         fontFamily: 'Cairo',
+                    //         color: Colors.black,
+                    //         fontSize: SizeConfig.scaleTextFont(16)),
+                    //   ),
+                    //   buttonColor: Colors.white,
+                    // ),
+                  ],
+                ),
+              ),
+              //product listView
+              GetX<CarsGetxController>(
+                  builder: (CarsGetxController carsController) {
+                return Visibility(
+                  visible: CarsControllerApi().isExeption == false,
+                  child: Container(
+                      height: SizeConfig.scaleHeight(285),
+                      width: double.infinity,
+                      child: ListView.builder(
+                          itemCount: carsController.getListLength(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            // carsController.showList();
+                            return Container(
+                                margin:
+                                    EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
+                                child: ProductWidget(
+                                  cars:  carsController.showCars[index],
+                                ));
+                          })),
+                );
               }),
-              );
-            },
-          ),
-          Container(
-            margin: EdgeInsets.only(
-              top: SizeConfig.scaleHeight(20),
-              bottom: SizeConfig.scaleHeight(27),
-            ),
-            child: Title(
-              title: 'أحدث التدوينات',
-            ),
-          ),
+              SizedBox(
+                height: SizeConfig.scaleHeight(33),
+              ),
+              //product listView
+              // Container(
+              //   height: SizeConfig.scaleHeight(285),
+              //   width: double.infinity,
+              //   child: ListView.builder(
+              //       itemCount: 5,
+              //       scrollDirection: Axis.horizontal,
+              //       itemBuilder: (BuildContext context, int index) {
+              //         return Container(
+              //             margin:
+              //             EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
+              //             child: ProductWidget());
+              //       }),
+              // ),
 
-          //stack
-          Container(
-            height: SizeConfig.scaleHeight(321),
-            child: GetX<BlogControllerGetx>(
-              builder: (BlogControllerGetx controller) {
-                return ListView.builder(
-                  itemCount: controller.blogs.length,
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
+              Consultation(),
+
+              Container(
+                  margin:
+                      EdgeInsets.symmetric(vertical: SizeConfig.scaleHeight(20)),
+                  child: Title(
+                    title: 'شركاؤنا',
+                  )),
+              Partners(),
+
+              Container(
+                margin: EdgeInsets.only(
+                  top: SizeConfig.scaleHeight(20),
+                  bottom: SizeConfig.scaleHeight(27),
+                ),
+                child: Title(
+                  title: 'تقيمات عملائنا',
+                ),
+              ),
+              //customer Comment
+              GetX<ReviwesControllerGetx>(
+                builder: (ReviwesControllerGetx controller) {
+                  return  Container(
+                      margin: EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
+                  height: SizeConfig.scaleHeight(194),
+                  width: double.infinity,
+                  child: ListView.builder(
+                  clipBehavior: Clip.none,
+                  itemCount: controller.reviews.length,
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    Blog blog = controller.blogs[index];
-                    return HowToSafeCard(
-                      blog: blog,
+                  itemBuilder: (BuildContext context, int index) {
+                  return CustomersComments(reviews: controller.reviews[index],);
+                  }),
+                  );
+                },
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  top: SizeConfig.scaleHeight(20),
+                  bottom: SizeConfig.scaleHeight(27),
+                ),
+                child: Title(
+                  title: 'أحدث التدوينات',
+                ),
+              ),
+
+              //stack
+              Container(
+                height: SizeConfig.scaleHeight(321),
+                child: GetX<BlogControllerGetx>(
+                  builder: (BlogControllerGetx controller) {
+                    return ListView.builder(
+                      itemCount: controller.blogs.length,
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        Blog blog = controller.blogs[index];
+                        return HowToSafeCard(
+                          blog: blog,
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.scaleHeight(30),
+              )
+            ],
           ),
-          SizedBox(
-            height: SizeConfig.scaleHeight(30),
-          )
-        ],
       ),
     );
   }
@@ -546,6 +602,11 @@ class BestMarcas extends StatelessWidget {
 }
 
 class NewAndUsedButtons extends StatelessWidget {
+
+  RxBool isOld;
+
+  NewAndUsedButtons({required this.isOld});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -556,7 +617,9 @@ class NewAndUsedButtons extends StatelessWidget {
         children: [
           Expanded(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                isOld.value = false;
+              },
               child: Text(
                 'جديد',
                 style: TextStyle(
@@ -578,7 +641,9 @@ class NewAndUsedButtons extends StatelessWidget {
           ),
           Expanded(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                isOld.value = true;
+              },
               child: Text(
                 'مستخدم',
                 style: TextStyle(

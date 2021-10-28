@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print("We are here2");
         UserPreferences().save(user);
         Future.delayed(Duration(seconds: 2), (){
-          Navigator.pushReplacementNamed(context,"/main_screen");
+          Navigator.pushReplacementNamed(context,"/bottom-nav");
         });
       }
  }

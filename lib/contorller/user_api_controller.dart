@@ -54,20 +54,27 @@ class UserApiController with Helper{
       Get.snackbar("تمت العملية بنجاح", jsonDecode(response.body)["Message"], backgroundColor: Colors.green);
       return true;
     }
+    Get.snackbar("تمت العملية بنجاح", jsonDecode(response.body)["message"], backgroundColor: Colors.green);
+
     print("Error ${jsonDecode(response.body)["message"]}");
     // Get.snackbar("خطأ", jsonDecode(response.body));
     return false;
   }
   Future<User?> verifyOtp(BuildContext context,{required String code,required String mobile,required String countryCode}) async{
+    print( {
+        "mobile":mobile,
+        "contryCode":countryCode,
+        "otp":code,
+       });
     var url = Uri.parse(ApiSettings.OTPVERIFY);
     var response = await http.post(url,headers: {
       "Accept" : "application/json",
     }, body: {
-      "mobile": mobile,
-      "otp" : code,
-      "contryCode" : countryCode
+      "mobile":mobile,
+      "contryCode":countryCode,
+      "otp":code,
      });
-
+print(response.body);
     if(response.statusCode == 200){
   print(response.statusCode);
 //1341
@@ -77,7 +84,7 @@ class UserApiController with Helper{
 
  }else{
       Get.snackbar("خطأ", "البيانات المدخلة غير صحيحة" , backgroundColor: Colors.red);
-      showSnackBar(context, jsonDecode(response.body)['message'], error: true);
+      showSnackBar(context, jsonDecode(response.body)['error'], error: true);
       return null;
     }
 }

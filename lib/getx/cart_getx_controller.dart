@@ -8,7 +8,7 @@ import 'package:saman_project/models/cart.dart';
 class CartGetxController extends GetxController {
 
   RxList<Cart> carts = <Cart>[].obs;
-  RxInt amount = 0.obs;
+  RxString amount = "".obs;
    CartController cartController = CartController();
   static CartGetxController get to => Get.find();
 
@@ -16,8 +16,8 @@ class CartGetxController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     indexCart();
-    getCountCart();
-    // amount.value = cart.map((element) => element.).reduce((value, element) => value + element);
+    // getCountCart();
+    // amount.value = carts.map((element) => element.car!.price).reduce((value, element) => value + element);
     super.onInit();
   }
 
@@ -46,10 +46,12 @@ class CartGetxController extends GetxController {
      return deleted;
    }
 
-  Future<void> getCountCart() async{
 
-    amount.value = await cartController.getCountCart();
 
-  }
+  // Future<void> getCountCart() async{
+  //
+  //   amount.value = await cartController.getCountCart();
+  //
+  // }
   }
 

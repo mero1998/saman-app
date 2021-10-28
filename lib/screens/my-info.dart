@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
@@ -42,81 +43,77 @@ class MyInformation extends StatelessWidget {
                           bottom:  SizeConfig.scaleHeight(17),
                           left:  SizeConfig.scaleWidth(16),
                           right:  SizeConfig.scaleWidth(16),
-                          child: Container(
-                            color: Colors.lightGreenAccent,
-                            height:SizeConfig.scaleHeight(289),
-                            child: Column(
-                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                // SizedBox(
-                                //   height: MediaQuery.of(context).size.height * .47,
-                                // ),
-                                ListTileRefactor(
-                                  title:'معلومات حسابي' ,
-                                  icon: Icons.person_outline,
-                                  onTap: (){
-                                    Navigator.pushNamed(context, '/account-info');
-                                  },
-                                ),
-                                ListTileRefactor(
-                                  title:'تغيير كلمة المرور' ,
-                                  icon: Icons.lock_open,
-                                  onTap: (){
-                                    Navigator.pushNamed(context, '/change-password');
-                                  },
-                                ),
-                                ListTileRefactor(
-                                  title:  'طلباتي',
-                                  icon:Icons.shopping_bag_outlined,
-                                  onTap: (){
-                                    Navigator.pushNamed(context, '/my-orders');
-                                  },
-                                ),
-                                ListTileRefactor(
-                                  title:  'بوابات الدفع',
-                                  icon:Icons.credit_card_outlined,
-                                  onTap: (){
-                                    Navigator.pushNamed(context, '/tab-bar-screen');
-                                  },
-                                ),
-                                ListTileRefactor(
-                                  title:  'الاعدادات',
-                                  icon:Icons.settings,
-                                  onTap: (){
-                                    Navigator.pushNamed(context, '/tab-bar-screen');
-                                  },
-                                ),
-                                SizedBox(
-                                  height: SizeConfig.scaleHeight(13),
-                                ),
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              // SizedBox(
+                              //   height: MediaQuery.of(context).size.height * .47,
+                              // ),
+                              ListTileRefactor(
+                                title:'معلومات حسابي' ,
+                                icon: Icons.person_outline,
+                                onTap: (){
+                                  Navigator.pushNamed(context, '/account-info');
+                                },
+                              ),
+                              ListTileRefactor(
+                                title:'تغيير كلمة المرور' ,
+                                icon: Icons.lock_open,
+                                onTap: (){
+                                  Navigator.pushNamed(context, '/change-password');
+                                },
+                              ),
+                              ListTileRefactor(
+                                title:  'طلباتي',
+                                icon:Icons.shopping_bag_outlined,
+                                onTap: (){
+                                  Navigator.pushNamed(context, '/my-orders');
+                                },
+                              ),
+                              ListTileRefactor(
+                                title:  'بوابات الدفع',
+                                icon:Icons.credit_card_outlined,
+                                onTap: (){
+                                  Navigator.pushNamed(context, '/tab-bar-screen');
+                                },
+                              ),
+                              ListTileRefactor(
+                                title:  'الاعدادات',
+                                icon:Icons.settings,
+                                onTap: (){
+                                  Navigator.pushNamed(context, '/tab-bar-screen');
+                                },
+                              ),
+                              SizedBox(
+                                height: SizeConfig.scaleHeight(13),
+                              ),
 
 
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: SizeConfig.scaleWidth(80),
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: SizeConfig.scaleWidth(80),
+                                ),
+                                width: double.infinity,
+                                height: SizeConfig.scaleHeight(58),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    UserApiController().logout(context);
+                                  },
+                                  child: Text(
+                                    'تسجيل الخروج',
+                                    style: TextStyle(
+                                        fontFamily: 'Cairo',
+                                        fontSize: SizeConfig.scaleTextFont(20)),
                                   ),
-                                  width: double.infinity,
-                                  height: SizeConfig.scaleHeight(58),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      UserApiController().logout(context);
-                                    },
-                                    child: Text(
-                                      'تسجيل الخروج',
-                                      style: TextStyle(
-                                          fontFamily: 'Cairo',
-                                          fontSize: SizeConfig.scaleTextFont(20)),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: kPrimaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(29),
-                                      ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: kPrimaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(29),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -151,9 +148,26 @@ class MyInformation extends StatelessWidget {
                     left: SizeConfig.scaleWidth(22),
                     child: Stack(
                         children:[
-                          CircleAvatar(
-                            radius: SizeConfig.scaleHeight(50),
-                            backgroundImage: NetworkImage(controller.user.first!.image ?? ""),
+                          CachedNetworkImage(
+                            imageUrl: UserGetxController.to.user.first!.image ?? "",
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: SizeConfig.scaleWidth(95),
+                              height: SizeConfig.scaleHeight(95),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  )
+                              ),
+                            ),
+                            placeholder: (context, url) => CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrangeAccent,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(Icons.person, size: SizeConfig.scaleWidth(95), color: Colors.white,)),
                           ),
                           Positioned(
                             bottom: SizeConfig.scaleHeight(15),

@@ -34,7 +34,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       bottomNavigationBar:  BottomNavyBar(
         backgroundColor: Color(0XFFF0F0F0),
-iconSize: SizeConfig.scaleHeight(28),
+      iconSize: SizeConfig.scaleHeight(28),
         containerHeight: SizeConfig.scaleHeight(60),
         selectedIndex: _selectedIndex,
         showElevation: true, // use this to remove appBar's elevation

@@ -57,7 +57,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return GetX<CarDetailsGetxController>(
       builder: (CarDetailsGetxController controller) {
         print(controller.carDetails.first!.brandId);
-        return controller.carDetails.length != 0 ? Scaffold(
+        return controller.carDetails.length != 0 && controller.carDetails.length != null ? Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
