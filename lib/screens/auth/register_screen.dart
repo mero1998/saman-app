@@ -31,8 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String? countryCode;
 
-  String initialCountry = 'NG';
-  PhoneNumber number = PhoneNumber(isoCode: 'NG');
+  String initialCountry = 'KW';
+  PhoneNumber number = PhoneNumber(isoCode: 'KW');
 
   String countryName = "";
 

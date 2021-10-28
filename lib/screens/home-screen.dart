@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     UserGetxController userControllerGetx = Get.put(UserGetxController());
     PartnersControllerGetx partnersGetxController = Get.put(PartnersControllerGetx());
     ReviwesControllerGetx reviwesGetxController = Get.put(ReviwesControllerGetx());
-    CarDetailsGetxController carDetailsGetxController = Get.put(CarDetailsGetxController());
+    // CarDetailsGetxController carDetailsGetxController = Get.put(CarDetailsGetxController());
     CartGetxController cartGetxController = Get.put(CartGetxController());
 
 

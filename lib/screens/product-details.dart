@@ -41,6 +41,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     // TODO: implement initState
     super.initState();
     pageController = PageController();
+   Get.put(CarDetailsGetxController());
+    CarDetailsGetxController.to.carDetailsIndex(widget.cars.id);
 
   }
 
@@ -52,12 +54,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
   @override
   Widget build(BuildContext context) {
-    CarDetailsGetxController.to.carDetailsIndex(widget.cars.id);
 
     return GetX<CarDetailsGetxController>(
       builder: (CarDetailsGetxController controller) {
-        print(controller.carDetails.first!.brandId);
-        return controller.carDetails.length != 0 && controller.carDetails.length != null ? Scaffold(
+        return controller.carDetails.length != 0 ? Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -87,14 +87,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       PageView.builder(
                         controller: pageController,
-                        itemCount: controller.carDetails.first?.images.length,
+                        itemCount: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)?.images.length,
                         onPageChanged: (index){
                           setState(() {
                             indexPage = index;
                           });
                         },
                         itemBuilder: (context, index){
-                          var list = controller.carDetails.first!.images;
+                          var list = controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.images;
                           // return Container();
                           // imageList.add(NetworkImage(controller.carDetails.first!.images[index].picUrl));
                           return  Image.network(list[index].picUrl, fit: BoxFit.cover,);
@@ -114,7 +114,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         },
                       ),
                       Visibility(
-                        visible:controller.carDetails.first!.images.length != 0,
+                        visible:controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.images.length != 0,
                         child: PositionedDirectional(
                           end: SizeConfig.scaleWidth(17),
                           top: SizeConfig.scaleHeight(15),
@@ -126,7 +126,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children:  [
                               IconButton(onPressed: (){
                                 pageController.previousPage(duration: Duration(microseconds: 500), curve: Curves.easeInBack);
-                                indexPage == 0 ? pageController.jumpToPage(controller.carDetails.first!.images.length -1) : null;
+                                indexPage == 0 ? pageController.jumpToPage(controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.images.length -1) : null;
                               },
                                   icon:  Icon(Icons.arrow_upward, color: Colors.white, size: SizeConfig.scaleWidth(13),)),
                             Container(
@@ -134,11 +134,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: ListView.builder(
                                 shrinkWrap: true,
                                 physics: ScrollPhysics(),
-                                itemCount: controller.carDetails.first!.images.length,
+                                itemCount: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.images.length,
                                 itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: (){
-                                    for(int i = 0; i < controller.carDetails.first!.images.length; i++){
+                                    for(int i = 0; i < controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.images.length; i++){
                                       pageController.jumpToPage(i);
                                     }
                                   },
@@ -160,7 +160,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                               IconButton(onPressed: (){
                                 pageController.nextPage(duration: Duration(microseconds: 500), curve: Curves.easeInBack);
-                                indexPage == controller.carDetails.first!.images.length -1 ? pageController.jumpToPage(0) : null;
+                                indexPage == controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.images.length -1 ? pageController.jumpToPage(0) : null;
                               }, icon:  Icon(Icons.arrow_downward,color: Colors.white, size: SizeConfig.scaleWidth(13),)),
                             ],
                           ),
@@ -170,7 +170,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
                 // ImageWithStack(),
-                TitleAndPrice(title: controller.carDetails.first!.name, price: widget.cars.price,),
+                TitleAndPrice(title: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.name, price: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.price,),
                 //Two Buttons
                 Padding(
                   padding:
@@ -268,7 +268,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             margin: EdgeInsets.symmetric(
                                 horizontal: SizeConfig.scaleWidth(15)),
                             child: Text(
-                              controller.carDetails.first!.description,
+                              controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.description,
                               style: TextStyle(
                                   fontFamily: 'Cairo',
                                   fontSize: SizeConfig.scaleTextFont(14)),
@@ -277,42 +277,42 @@ class _ProductDetailsState extends State<ProductDetails> {
                           DetailsLine(
                             icon: Icons.edit_road,
                             firstTitle: 'الاميال',
-                            lastTitle:controller.carDetails.first!.mileage,
+                            lastTitle:controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.mileage,
                           ),
                           DetailsLine(
                             icon: Icons.local_gas_station_outlined,
                             firstTitle: 'نوع الوقود',
-                            lastTitle: controller.carDetails.first!.fuelType,
+                            lastTitle: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.fuelType,
                           ),
                           DetailsLine(
                             icon: Icons.invert_colors_on_outlined,
                             firstTitle: 'اللون الداخلي',
-                            lastTitle: controller.carDetails.first!.interColor,
+                            lastTitle: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.interColor,
                           ),
                           DetailsLine(
                             icon: Icons.invert_colors_on_outlined,
                             firstTitle: 'اللون الخارجي',
-                            lastTitle: controller.carDetails.first!.color,
+                            lastTitle: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.color,
                           ),
                           DetailsLine(
                             icon: Icons.calendar_today_outlined,
                             firstTitle: 'موديل سنة',
-                            lastTitle: controller.carDetails.first!.modelYear,
+                            lastTitle: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.modelYear,
                           ),
                           DetailsLine(
                             icon: Icons.local_gas_station_outlined,
                             firstTitle: 'توفير وقود',
-                            lastTitle: controller.carDetails.first!.fuelConsumption,
+                            lastTitle: controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.fuelConsumption,
                           ),
                           DetailsLine(
                             icon: Icons.car_repair,
                             firstTitle: 'ناقل الحركة',
-                            lastTitle:  controller.carDetails.first!.transmission,
+                            lastTitle:  controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.transmission,
                           ),
                           DetailsLine(
                             icon: Icons.card_membership_sharp,
                             firstTitle: 'محرك',
-                            lastTitle:controller.carDetails.first!.engine,
+                            lastTitle:controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.engine,
                           ),
                         ],
                       ),
@@ -491,7 +491,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ],
             ),
           ),
-        ) : Scaffold(body: Center(child: CircularProgressIndicator(),));
+        ) :  Scaffold(body: Center(child: CircularProgressIndicator(),));
       },
     );
   }

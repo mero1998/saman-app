@@ -54,7 +54,7 @@ class UserApiController with Helper{
       Get.snackbar("تمت العملية بنجاح", jsonDecode(response.body)["Message"], backgroundColor: Colors.green);
       return true;
     }
-    Get.snackbar("تمت العملية بنجاح", jsonDecode(response.body)["message"], backgroundColor: Colors.green);
+    Get.snackbar("فشل", jsonDecode(response.body)["message"], backgroundColor: Colors.red);
 
     print("Error ${jsonDecode(response.body)["message"]}");
     // Get.snackbar("خطأ", jsonDecode(response.body));
