@@ -12,6 +12,12 @@ class CarDetailsGetxController extends GetxController{
 
  static CarDetailsGetxController get to => Get.find();
 
+  //
+  // @override
+  // void dispose() {
+  //   carDetails.clear();
+  //   super.dispose();
+  // }
 
   Future<void> carDetailsIndex(int carId) async{
 

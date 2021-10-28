@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:saman_project/api/api_settings.dart';
 import 'package:saman_project/getx/car_details_getx_controller.dart';
+import 'package:saman_project/getx/cars_controller_getx.dart';
 import 'package:saman_project/getx/wishlist_getx_controller.dart';
 import 'package:saman_project/models/cars.dart';
 import 'package:saman_project/screens/product-details.dart';
@@ -135,8 +137,10 @@ class ProductWidget extends StatelessWidget {
                         horizontal: SizeConfig.scaleWidth(24.5),
                       ),
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (c) => ProductDetails(cars: cars)));
+                        onPressed: () async {
+                          await Get.delete<CarDetailsGetxController>();
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetails(cars: cars)));
                         },
                         child: Text(
                           'عرض التفاصيل',

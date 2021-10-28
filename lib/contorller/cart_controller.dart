@@ -56,14 +56,14 @@ class CartController{
   }
 
 
-  Future<bool> removeFromCart({required String carId}) async{
+  Future<bool> removeFromCart({required int carId}) async{
     var url = Uri.parse(ApiSettings.REMOVEFROMCART);
     var response = await http.post(url,
         headers: {
           HttpHeaders.authorizationHeader : UserPreferences().getToken(),
 
         }, body: {
-          "car_id": carId,
+          "car_id": carId.toString(),
         });
 
     print(response.statusCode);

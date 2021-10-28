@@ -20,6 +20,12 @@ class UserGetxController extends GetxController{
   }
 
 
+  @override
+  void dispose() {
+    user.clear();
+    super.dispose();
+  }
+
   Future<void> indexUserDetails() async{
 
     UserDetails? userDetails  = await userApiController.userDetails();

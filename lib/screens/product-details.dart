@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imageview360_nullsafe/imageview360_nullsafe.dart';
+import 'package:saman_project/contorller/car_controller_api.dart';
 import 'package:saman_project/contorller/cart_controller.dart';
 import 'package:saman_project/getx/car_details_getx_controller.dart';
+import 'package:saman_project/getx/cars_controller_getx.dart';
 import 'package:saman_project/getx/cart_getx_controller.dart';
 import 'package:saman_project/models/cars.dart';
 import 'package:saman_project/utils/constans.dart';
@@ -42,7 +44,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     super.initState();
     pageController = PageController();
    Get.put(CarDetailsGetxController());
-    CarDetailsGetxController.to.carDetailsIndex(widget.cars.id);
 
   }
 
@@ -52,11 +53,24 @@ class _ProductDetailsState extends State<ProductDetails> {
     CarDetailsGetxController.to.carDetails.clear();
     super.dispose();
   }
+
+
   @override
   Widget build(BuildContext context) {
-
+    CarDetailsGetxController.to.carDetailsIndex(widget.cars.id);
     return GetX<CarDetailsGetxController>(
+      // didChangeDependencies: (state) {
+      //   state.controller!.carDetails.clear();
+      //   state.controller!.carDetailsIndex(widget.cars.id);
+      // },
+      autoRemove: true,
+      dispose: (state) {
+        print("dipose");
+          state.controller!.carDetails.clear();
+          state.controller!.carDetailsIndex(widget.cars.id);
+      },
       builder: (CarDetailsGetxController controller) {
+        print(widget.cars.id);
         return controller.carDetails.length != 0 ? Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -64,7 +78,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             elevation: 0,
             iconTheme: IconThemeData(color: kPrimaryColor),
             title: Text(
-              controller.carDetails[0]!.name,
+              controller.carDetails.firstWhere((element) => element!.id == widget.cars.id)!.name,
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Cairo',
@@ -472,6 +486,27 @@ class _ProductDetailsState extends State<ProductDetails> {
                         vertical:SizeConfig.scaleHeight(20),
                         horizontal: SizeConfig.scaleWidth(16)),
                     child: Title( title: 'سيارات قد تعجبك',)),
+                GetX<CarsGetxController>(
+                    builder: (CarsGetxController carsController) {
+                      return Visibility(
+                        visible: CarsControllerApi().isExeption == false,
+                        child: Container(
+                            height: SizeConfig.scaleHeight(285),
+                            width: double.infinity,
+                            child: ListView.builder(
+                                itemCount: carsController.cars.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (BuildContext context, int index) {
+                                  // carsController.showList();
+                                  return Container(
+                                      margin:
+                                      EdgeInsets.only(right: SizeConfig.scaleWidth(16)),
+                                      child: ProductWidget(
+                                        cars:  carsController.cars[index],
+                                      ));
+                                })),
+                      );
+                    }),
                 // Container(
                 //   height: SizeConfig.scaleHeight(285),
                 //   width: double.infinity,

@@ -116,9 +116,7 @@ class _MyCartState extends State<MyCart> {
                               InkWell(
                                 onTap: () {
                                   controller.removeFromCart(
-                                      carId: CartGetxController
-                                          .to.carts[index].car!.id
-                                          .toString());
+                                      carId: controller.carts[index].car!.id);
                                 },
                                 child: CircleAvatar(
                                   radius: SizeConfig.scaleHeight(20),
